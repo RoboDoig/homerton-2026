@@ -15,17 +15,13 @@ and shows how to drive real hardware from a Bonsai workflow using the
 
 | Time | Session | Materials |
 | --- | --- | --- |
-| 09:30 | Welcome and setup | [Getting Started](worksheets/01-getting-started.md) |
-| 10:00 | Talk: Introduction to Bonsai | [Slides](slides/index.md) |
-| 11:00 | Workshop: acquisition and tracking | [Worksheets](worksheets/index.md) |
-| 13:00 | Lunch | |
-| 14:00 | Talk: Closed-loop experiments | [Slides](slides/index.md) |
-| 15:00 | Workshop: interfacing with the Hobgoblin | [Hobgoblin](hobgoblin/index.md) |
-| 17:00 | Wrap-up and questions | |
-
-> [!NOTE]
-> The schedule above is a placeholder. Adjust the sessions and timings once the
-> final workshop programme is fixed.
+| 09:00 | Welcome and introduction to open-source | [Slides](slides/index.md) |
+| 09:20 | Introduction to Bonsai | [Slides](slides/index.md) |
+| 10:00 | Bonsai workshop | [Worksheets](worksheets/index.md) |
+| 10:30 | Break | |
+| 11:00 | Bonsai project best practices | [Slides](slides/index.md) |
+| 11:30 | Bonsai workshop | [Worksheets](worksheets/index.md) |
+| 13:00 | Wrap-up and questions | |
 
 ## Before you arrive
 
