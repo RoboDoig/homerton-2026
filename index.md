@@ -16,7 +16,7 @@ and shows how to drive real hardware from a Bonsai workflow using the
 | Time | Session | Materials |
 | --- | --- | --- |
 | 09:00 | Welcome and introduction to open-source | [Slides](slides/index.md) |
-| 09:20 | Introduction to Bonsai | [Slides](slides/index.md) |
+| 09:20 | Introduction to Bonsai and Harp | [Slides](slides/index.md) |
 | 10:00 | Bonsai workshop | [Worksheets](worksheets/index.md) |
 | 10:30 | Break | |
 | 11:00 | Bonsai project best practices | [Slides](slides/index.md) |

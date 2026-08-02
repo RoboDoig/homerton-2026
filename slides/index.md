@@ -9,7 +9,7 @@ Talk decks for the workshop. Each deck is a self-contained
 
 | Deck | Description |
 | --- | --- |
-| [Introduction to Bonsai](decks/01-introduction.html) | What visual reactive programming is, and how to read a Bonsai workflow. |
+| [Introduction to Bonsai and Harp](decks/01-introduction.html) | What visual reactive programming is, how to read a Bonsai workflow, and an introduction to Harp at the end. |
 | [Template deck](decks/template.html) | Empty starting point — copy this to begin a new talk. |
 
 > [!NOTE]

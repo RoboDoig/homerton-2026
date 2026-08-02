@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Introduction to Bonsai — Homerton 2026</title>
+  <title>Introduction to Bonsai and Harp — Homerton 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
@@ -17,7 +17,7 @@
                data-separator-notes="^Note:">
         <textarea data-template>
 
-### Introduction to Bonsai
+### Introduction to Bonsai and Harp
 
 Visual Reactive Programming
 
@@ -30,12 +30,13 @@ Homerton College, Cambridge — 4th August 2026
 * What is Bonsai?
 * Data streams and marble diagrams
 * Finding your way around the editor
-* The hardware and software ecosystem
-  * Harp
+* Introduction to Harp
+  * Why synchronisation is the hard problem
   * The Hobgoblin
 
 Note:
 Placeholder outline — replace with the real talk structure.
+The Harp material is folded in at the end rather than being a separate talk.
 
 ---
 
@@ -64,11 +65,42 @@ TODO: add a marble diagram figure to `images/` and reference it here:
 
 ---
 
-### The ecosystem
+### Introduction to Harp
+
+The ecosystem around Bonsai:
 
 * **Bonsai** — the language and editor
 * **Harp** — a protocol and device family for synchronised acquisition
 * **Hobgoblin** — a small, general-purpose Harp board for teaching and prototyping
+
+Note:
+This is where the Harp talk begins — it is folded into the end of this deck
+rather than being a separate session.
+
+--
+
+### Why synchronisation is the hard problem
+
+TODO: motivate this. The host computer sees a message *some time after* the
+event happened, and that delay varies. Reconstructing what happened when, across
+several devices, is what breaks naive rigs.
+
+--
+
+### What Harp does about it
+
+TODO: cover the shared clock and hardware timestamping — every event carries the
+time the *device* saw it, so streams from different devices can be aligned
+after the fact.
+
+--
+
+### The Hobgoblin
+
+TODO: introduce the board the practical session uses, and hand off to the
+Hobgoblin exercises.
+
+[Hobgoblin](../../hobgoblin/index.html)
 
 ---
 
