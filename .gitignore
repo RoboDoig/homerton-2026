@@ -11,6 +11,10 @@ log.txt
 .bonsai/Extensions/
 *.bonsai.layout.bak
 
+# Personal prep notes — kept local, and excluded from the docfx build in case
+# one is ever committed anyway.
+*-notes.md
+
 # Editors / OS
 .vs/
 .vscode/
