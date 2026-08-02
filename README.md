@@ -49,3 +49,14 @@ section in particular needs filling in from
 
 Modelled on [neurogears/st-andrews-2024](https://github.com/neurogears/st-andrews-2024),
 whose NeuroKit section is replaced here by the Hobgoblin section.
+
+## Credits and licensing
+
+The workflow and marble diagrams in `images/`, and much of the structure of the
+"Introduction to Bonsai and Harp" deck, are reused from the
+[St Andrews 2024 Bonsai course](https://github.com/neurogears/st-andrews-2024).
+
+That material is © NeuroGEARS Ltd. and licensed
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). ShareAlike means
+this repository should carry a compatible licence — **it currently has no LICENSE
+file**, which is worth fixing before the site is shared more widely.

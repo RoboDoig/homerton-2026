@@ -1,0 +1,35 @@
+/* Shared styling for the reveal.js decks in this folder.
+   Link with <link rel="stylesheet" href="deck.css"> after the reveal theme. */
+
+/* The figures are mostly SVG diagrams. Drop reveal's default image frame and
+   keep them scaled inside the slide. */
+.reveal section img {
+  border: none;
+  background: none;
+  box-shadow: none;
+  max-height: 58vh;
+}
+
+/* Side-by-side pairs — a workflow next to its marble diagram. */
+.reveal .pair {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.reveal .pair img {
+  max-height: 48vh;
+  margin: 0;
+}
+
+/* Title-slide lettering should not dominate the slide. */
+.reveal img.brand {
+  max-height: 11vh;
+}
+
+/* Operator names read better in code font than as prose headings. */
+.reveal h6 {
+  font-family: monospace;
+  text-transform: none;
+}
