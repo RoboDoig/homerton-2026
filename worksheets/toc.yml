@@ -1,0 +1,8 @@
+- name: Overview
+  href: index.md
+- name: 1 — Getting Started
+  href: 01-getting-started.md
+- name: 2 — Acquisition and Tracking
+  href: 02-acquisition.md
+- name: Worksheet template
+  href: template.md

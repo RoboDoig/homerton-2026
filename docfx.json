@@ -1,0 +1,58 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**",
+          "**/README.md",
+          "OUTLINE.md",
+          "slides/decks/**",
+          ".github/**",
+          "template/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "assets/**",
+          "images/**",
+          "workflows/**",
+          "slides/decks/**",
+          "favicon.ico"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern",
+      "template"
+    ],
+    "globalMetadata": {
+      "_appName": "Homerton 2026",
+      "_appTitle": "Bonsai Workshop — Homerton College, Cambridge",
+      "_appFooter": "Prepared by <a href=\"https://neurogears.org\">NeuroGEARS Ltd.</a> for the Homerton College workshop, 4th August 2026.",
+      "_enableSearch": true,
+      "_disableContribution": false,
+      "_gitContribute": {
+        "repo": "https://github.com/RoboDoig/homerton-2026",
+        "branch": "main"
+      },
+      "pdf": false
+    },
+    "markdownEngineProperties": {
+      "markdigExtensions": [
+        "attributes",
+        "customcontainers"
+      ]
+    },
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ]
+  }
+}

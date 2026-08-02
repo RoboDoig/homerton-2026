@@ -1,0 +1,20 @@
+# docfx build output
+_site/
+api/**/*.yml
+api/.manifest
+log.txt
+
+# Bonsai local environment
+.bonsai/Bonsai.exe
+.bonsai/Bonsai.exe.settings
+.bonsai/Packages/
+.bonsai/Extensions/
+*.bonsai.layout.bak
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+*~

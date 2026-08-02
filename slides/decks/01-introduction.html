@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Bonsai — Homerton 2026</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown
+               data-separator="^\n---\n$"
+               data-separator-vertical="^\n--\n$"
+               data-separator-notes="^Note:">
+        <textarea data-template>
+
+### Introduction to Bonsai
+
+Visual Reactive Programming
+
+Homerton College, Cambridge — 4th August 2026
+
+---
+
+### Outline
+
+* What is Bonsai?
+* Data streams and marble diagrams
+* Finding your way around the editor
+* The hardware and software ecosystem
+  * Harp
+  * The Hobgoblin
+
+Note:
+Placeholder outline — replace with the real talk structure.
+
+---
+
+### What is Bonsai?
+
+A visual language for building reactive data-processing pipelines.
+
+* Nodes are **operators**
+* Edges are **streams of data**
+* A workflow describes *what* happens to each value, not *when*
+
+--
+
+### Why streams?
+
+Experiments are made of asynchronous sources: cameras, microphones,
+sensors, timers. A stream is a uniform way to talk about all of them.
+
+---
+
+### Marble diagrams
+
+TODO: add a marble diagram figure to `images/` and reference it here:
+
+`![Marble diagram](../../images/marblediagram.svg)`
+
+---
+
+### The ecosystem
+
+* **Bonsai** — the language and editor
+* **Harp** — a protocol and device family for synchronised acquisition
+* **Hobgoblin** — a small, general-purpose Harp board for teaching and prototyping
+
+---
+
+### Over to the worksheets
+
+[Worksheets](../../worksheets/index.html)
+
+        </textarea>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

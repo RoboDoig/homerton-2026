@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.5"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns="clr-namespace:Bonsai.Expressions;assembly=Bonsai.Core">
+  <Workflow>
+    <Nodes />
+    <Edges />
+  </Workflow>
+</WorkflowBuilder>

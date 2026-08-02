@@ -1,0 +1,26 @@
+/* Site-specific overrides for the docfx "modern" template.
+   Keep this small — prefer the template defaults where they work. */
+
+:root {
+  --workshop-accent: #d2691e;
+}
+
+/* Make exercise headings in the worksheets easy to scan. */
+article h3 strong {
+  color: var(--workshop-accent);
+}
+
+/* Give workflow figures room to breathe and stop them overflowing on mobile. */
+article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem 0;
+}
+
+/* Tables in the schedule and register maps should scroll rather than
+   push the page sideways. */
+article .table-responsive,
+article table {
+  max-width: 100%;
+}

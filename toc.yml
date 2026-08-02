@@ -1,0 +1,8 @@
+- name: Home
+  href: index.md
+- name: Slides
+  href: slides/
+- name: Worksheets
+  href: worksheets/
+- name: Hobgoblin
+  href: hobgoblin/

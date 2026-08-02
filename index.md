@@ -1,0 +1,47 @@
+---
+title: Welcome
+---
+
+# Visual Reactive Programming with Bonsai
+
+A short workshop at **Homerton College, Cambridge** on **4th August 2026**.
+
+This workshop introduces the basic concepts of data acquisition and behavioural
+control using the [Bonsai](https://bonsai-rx.org) visual programming language,
+and shows how to drive real hardware from a Bonsai workflow using the
+[Harp Hobgoblin](hobgoblin/index.md).
+
+## Schedule
+
+| Time | Session | Materials |
+| --- | --- | --- |
+| 09:30 | Welcome and setup | [Getting Started](worksheets/01-getting-started.md) |
+| 10:00 | Talk: Introduction to Bonsai | [Slides](slides/index.md) |
+| 11:00 | Workshop: acquisition and tracking | [Worksheets](worksheets/index.md) |
+| 13:00 | Lunch | |
+| 14:00 | Talk: Closed-loop experiments | [Slides](slides/index.md) |
+| 15:00 | Workshop: interfacing with the Hobgoblin | [Hobgoblin](hobgoblin/index.md) |
+| 17:00 | Wrap-up and questions | |
+
+> [!NOTE]
+> The schedule above is a placeholder. Adjust the sessions and timings once the
+> final workshop programme is fixed.
+
+## Before you arrive
+
+1. Bring a laptop running Windows 10 or later.
+2. Install Bonsai by following the [Getting Started](worksheets/01-getting-started.md)
+   worksheet — doing this in advance saves workshop time.
+3. If you have been sent a Hobgoblin board, bring it along with its USB cable.
+
+## Sections
+
+- **[Slides](slides/index.md)** — the talk decks presented during the workshop.
+- **[Worksheets](worksheets/index.md)** — hands-on exercises to work through.
+- **[Hobgoblin](hobgoblin/index.md)** — the hardware used in the practical sessions.
+
+## Further reading
+
+- [Bonsai documentation](https://bonsai-rx.org/docs)
+- [Harp technical reference](https://harp-tech.org)
+- [Hobgoblin device repository](https://github.com/harp-tech/device.hobgoblin)
