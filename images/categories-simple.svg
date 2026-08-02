@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="140mm"
+   height="116.94982mm"
+   viewBox="0 0 140.00001 116.94984"
+   version="1.1"
+   id="svg6496"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="categories-simple.svg">
+  <defs
+     id="defs6490">
+    <clipPath
+       id="48_text_clipper">
+      <rect
+         x="6"
+         y="556"
+         width="152.60001"
+         height="26.389999"
+         id="49" />
+    </clipPath>
+    <clipPath
+       id="36_text_clipper">
+      <rect
+         id="37"
+         height="26.389999"
+         width="49.209999"
+         y="396"
+         x="6" />
+    </clipPath>
+    <clipPath
+       id="12_text_clipper">
+      <rect
+         id="13"
+         height="26.389999"
+         width="126.13"
+         y="76"
+         x="6" />
+    </clipPath>
+    <clipPath
+       id="12_text_clipper-7">
+      <rect
+         id="13-4"
+         height="26.389999"
+         width="98.629997"
+         y="76"
+         x="326" />
+    </clipPath>
+    <clipPath
+       id="24_text_clipper">
+      <rect
+         id="25"
+         height="26.389999"
+         width="103.3"
+         y="236"
+         x="6" />
+    </clipPath>
+    <clipPath
+       id="12_text_clipper-7-9">
+      <rect
+         id="13-4-8"
+         height="26.389999"
+         width="98.629997"
+         y="76"
+         x="326" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.940766"
+     inkscape:cx="290.02425"
+     inkscape:cy="233.7243"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="3000"
+     inkscape:window-height="1875"
+     inkscape:window-x="-13"
+     inkscape:window-y="-13"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata6493">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(12.892901,25.479204)">
+    <text
+       transform="matrix(0.16671209,0,0,0.16671209,4.6537163,-18.382405)"
+       clip-path="url(#36_text_clipper)"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       y="396"
+       x="6"
+       id="34">
+      <tspan
+         id="38"
+         dy="15.75pt">Sink</tspan>
+    </text>
+    <text
+       clip-path="url(#12_text_clipper)"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       y="76"
+       x="6"
+       id="10"
+       transform="matrix(0.16671209,0,0,0.16671209,4.6537163,-19.758416)">
+      <tspan
+         id="14"
+         dy="15.75pt">Source</tspan>
+    </text>
+    <text
+       clip-path="url(#24_text_clipper)"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       y="236"
+       x="6"
+       id="22"
+       transform="matrix(0.16671209,0,0,0.16671209,4.6537163,-28.191049)">
+      <tspan
+         id="26"
+         dy="15.75pt">Transform</tspan>
+    </text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.46935511px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;stroke-width:0.24260081px"
+       x="5.2825508"
+       y="-20.690365"
+       id="text4593"><tspan
+         sodipodi:role="line"
+         id="tspan4591"
+         x="5.2825513"
+         y="-20.690365">Category</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.46935511px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;stroke-width:0.24260081px"
+       x="54.282551"
+       y="-20.699842"
+       id="text4605"><tspan
+         sodipodi:role="line"
+         id="tspan4603"
+         x="54.282551"
+         y="-20.699842">Description</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.85201645px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;stroke-width:0.24260081px"
+       x="36.41917"
+       y="-6.0545478"
+       id="text4652"><tspan
+         sodipodi:role="line"
+         id="tspan4650"
+         x="36.41917"
+         y="-6.0545478">generate event streams from</tspan><tspan
+         sodipodi:role="line"
+         x="36.41917"
+         y="0.010472775"
+         id="tspan4654">devices or files</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.85201645px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;stroke-width:0.24260081px"
+       x="36.426277"
+       y="12.174903"
+       id="text4652-7"><tspan
+         sodipodi:role="line"
+         x="36.426277"
+         y="12.174903"
+         id="tspan4654-2">convert or process individual</tspan><tspan
+         sodipodi:role="line"
+         x="36.426277"
+         y="18.239923"
+         id="tspan4720">data items</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.85201645px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;stroke-width:0.24260081px"
+       x="36.414429"
+       y="48.20615"
+       id="text4652-7-4-0"><tspan
+         sodipodi:role="line"
+         x="36.414429"
+         y="48.20615"
+         id="tspan4745-5">save data or trigger external</tspan><tspan
+         sodipodi:role="line"
+         x="36.414429"
+         y="54.271172"
+         id="tspan4782">outputs </tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4772"
+       style="font-size:26.66666603px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;stroke-width:1px"
+       transform="matrix(0.24260082,0,0,0.24260082,36.665881,39.823303)"><flowRegion
+         id="flowRegion4774"><rect
+           id="rect4776"
+           width="194.76439"
+           height="39.914677"
+           x="-65.402359"
+           y="60.743122" /></flowRegion><flowPara
+         id="flowPara4778" /></flowRoot>    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24260081px"
+       d="M -12.892901,-13.340365 H 127.1071"
+       id="path4809"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24260081px"
+       d="M -12.892901,4.3429738 H 127.1071"
+       id="path4809-7"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g824"
+       transform="matrix(0.33333333,0,0,0.33333333,-8.5414007,-9.8403585)">
+      <path
+         style="fill:none;stroke:#a9a9a9;stroke-width:2"
+         inkscape:connector-curvature="0"
+         id="path2"
+         d="M 31.179,5.2 C 34.9985,11.0918 34.9814,18.682 31.135517,24.557" />
+      <circle
+         style="fill:#5bb27e"
+         id="circle4"
+         r="15"
+         cy="15"
+         cx="15" />
+    </g>
+    <circle
+       style="fill:#449adf;stroke-width:0.33333331"
+       cx="-3.5414007"
+       cy="13.400932"
+       r="5"
+       id="circle2" />
+    <g
+       id="g1041"
+       transform="translate(45.890913,-26.394428)">
+      <path
+         style="fill:none;stroke:#a9a9a9;stroke-width:0.66671419"
+         inkscape:connector-curvature="0"
+         id="path2-6"
+         d="M -51.046786,82.344028 C -53.297814,81.863694 -55.053406,80.100268 -55.523439,77.847041" />
+      <circle
+         style="fill:#9b5bb3;stroke-width:0.3333571"
+         id="circle4-0"
+         r="5.0003567"
+         cy="76.276932"
+         cx="-49.432671" />
+    </g>
+    <text
+       transform="matrix(0.16671209,0,0,0.16671209,4.6537163,-63.297627)"
+       clip-path="url(#48_text_clipper)"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       y="556"
+       x="6"
+       id="46">
+      <tspan
+         id="50"
+         dy="15.75pt">Combinator</tspan>
+    </text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.85201645px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;stroke-width:0.24260081px"
+       x="36.227268"
+       y="29.976707"
+       id="text4652-7-4-0-7"><tspan
+         sodipodi:role="line"
+         x="36.227268"
+         y="29.976707"
+         id="tspan4782-1">manage control flow or synchronize</tspan><tspan
+         sodipodi:role="line"
+         x="36.227268"
+         y="36.041729"
+         id="tspan4807">parallel inputs </tspan></text>
+    <circle
+       style="fill:#eec04b;stroke-width:0.33333331"
+       cx="-3.5413995"
+       cy="31.64222"
+       r="5"
+       id="circle2-3" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24260081px"
+       d="M -12.892901,22.555467 H 127.1071"
+       id="path4809-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24260081px"
+       d="M -12.892901,40.767967 H 127.1071"
+       id="path4809-5"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

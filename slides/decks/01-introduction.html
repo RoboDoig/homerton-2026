@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="deck.css">
 </head>
 <body>
   <div class="reveal">
@@ -16,6 +17,8 @@
                data-separator-vertical="^\n--\n$"
                data-separator-notes="^Note:">
         <textarea data-template>
+
+<img class="brand" src="../../images/bonsai-lettering.svg" alt="Bonsai">
 
 ### Introduction to Bonsai and Harp
 
@@ -30,85 +33,471 @@ Homerton College, Cambridge — 4th August 2026
 ### Outline
 
 * What is Bonsai?
-* Data streams and marble diagrams
-* Finding your way around the editor
-* Introduction to Harp
-  * Why synchronisation is the hard problem
-  * The Hobgoblin
+* Reading a workflow
+* Reactive operators
+* Higher-order operators
+* Harp
 
 Note:
-Placeholder outline — replace with the real talk structure.
-The Harp material is folded in at the end rather than being a separate talk.
+Consolidated from three separate lectures. The appendix at the end holds the
+full operator reference — leave it for questions.
+
+---
+
+### In a perfect world
+
+![Single DAQ](../../images/nidaq.jpg)
+
+All our data arrives at one synchronized device.
+
+---
+
+### In reality
+
+<img src="../../images/devices.jpg" alt="Devices compatible with Bonsai">
+
+A mesh of multi-purpose asynchronous devices.
+
+Note:
+This is the problem Bonsai exists to solve. Every one of these has its own
+clock, its own driver, its own idea of when "now" is.
 
 ---
 
 ### What is Bonsai?
 
-A visual language for building reactive data-processing pipelines.
-
-* Nodes are **operators**
-* Edges are **streams of data**
-* A workflow describes *what* happens to each value, not *when*
-
---
-
-### Why streams?
-
-Experiments are made of asynchronous sources: cameras, microphones,
-sensors, timers. A stream is a uniform way to talk about all of them.
+![Bonsai](../../images/bonsai-core.svg)
 
 ---
 
+### [Marble diagrams](https://bonsai-rx.org/docs/articles/observables.html)
+
+![Marble diagram](../../images/marblediagram.svg)
+
+Note:
+Time runs left to right. Each marble is a value arriving on the stream.
+
+---
+
+<!-- .slide: data-transition="none" -->
 ### Marble diagrams
 
-TODO: add a marble diagram figure to `images/` and reference it here:
+![Marble diagram](../../images/marblediagram.svg)
 
-`![Marble diagram](../../images/marblediagram.svg)`
+![Error diagram](../../images/marblediagram-error.svg)
+
+Note:
+A sequence can also terminate — successfully, or with an error.
+
+---
+
+<!-- .slide: data-transition="none" -->
+### Marble diagrams
+
+![Operator diagram](../../images/marblediagram-operator.svg)
+
+Note:
+An operator takes one sequence and returns another. That is the whole algebra.
+
+---
+
+### Reading a workflow
+
+<div class="pair">
+  <img src="../../images/graycam.svg" alt="Workflow">
+  <img src="../../images/graycam-marble.svg" alt="Marble diagram">
+</div>
+
+Note:
+Every workflow you build has a marble diagram behind it. Get comfortable moving
+between the two representations.
+
+---
+
+<!-- .slide: data-transition="none" -->
+### Reading a workflow
+
+<div class="pair">
+  <img src="../../images/graycam.svg" alt="Workflow">
+  <img src="../../images/grayscaletransform.svg" alt="Marble diagram">
+</div>
+
+---
+
+<!-- .slide: data-transition="none" -->
+### Reading a workflow
+
+<div class="pair">
+  <img src="../../images/framepicker-sample.svg" alt="Workflow">
+  <img src="../../images/grayscalesample.svg" alt="Marble diagram">
+</div>
+
+Note:
+Now two sources. The second one decides *when* we take a value from the first.
+
+---
+
+<!-- .slide: data-transition="none" -->
+### Reading a workflow
+
+<div class="pair">
+  <img src="../../images/framepicker-saveimage.svg" alt="Workflow">
+  <img src="../../images/saveimagesink.svg" alt="Marble diagram">
+</div>
+
+Note:
+A sink does something with each value and passes it through untouched.
+
+---
+
+### The editor
+
+![Bonsai workflow editor](../../images/editor.jpg)
+
+---
+
+### The ecosystem
+
+![Bonsai Ecosystem](../../images/bonsai-packages.svg)
+
+Note:
+Everything is a package. Almost nothing in the box is required.
+
+---
+
+### Reactive operators
+
+![Operator categories](../../images/categories-simple.svg)
+
+Note:
+Four broad families. The appendix has one diagram per operator.
+
+---
+
+###### Zip
+
+![Zip](../../images/zip.svg)
+
+Note:
+Pairs values one-for-one, waiting for both. This is the operator people reach
+for when they mean synchronisation.
+
+---
+
+###### CombineLatest
+
+![CombineLatest](../../images/combinelatest.svg)
+
+Note:
+Emits on *either* input, pairing with the most recent value of the other.
+
+---
+
+###### WithLatestFrom
+
+![WithLatestFrom](../../images/withlatestfrom.svg)
+
+Note:
+Asymmetric — only the left stream drives output. Usually what you actually
+want in a closed-loop rig.
+
+---
+
+<!-- .slide: data-transition="none" -->
+###### Transform
+
+![Transform](../../images/transform.svg)
+
+---
+
+<!-- .slide: data-transition="none" -->
+###### Select
+
+![Select](../../images/select.svg)
+
+---
+
+###### SelectMany
+
+![SelectMany](../../images/selectmany.svg)
+
+Note:
+Here is the jump: the function returns a *sequence*, not a value. One value in,
+a whole stream out — and they get flattened together.
+
+---
+
+###### SelectMany: play audio on cue
+
+![SelectMany](../../images/selectmany-playsound-1.svg)
+
+---
+
+<!-- .slide: data-transition="none" -->
+###### SelectMany: play audio on cue
+
+![SelectMany](../../images/selectmany-playsound-2.svg)
+
+Note:
+Each cue spawns its own independent playback sequence.
+
+---
+
+### Sharing sequences
+
+<div class="pair">
+  <img src="../../images/branching-simple.svg" alt="Branching">
+  <img src="../../images/subjects-publish-simple.svg" alt="Subjects (Publish)">
+</div>
+
+Note:
+Branching subscribes twice — two cameras, two files. Publishing shares one
+subscription between both branches.
+
+---
+
+### Hot vs cold
+
+![Temperature](../../images/temperature.svg)
+
+Note:
+Cold: each subscriber gets its own private sequence. Hot: everyone shares one.
+This is the single most common source of "why is my camera opening twice?"
+
+---
+
+### Publish and Replay
+
+<div class="pair">
+  <img src="../../images/publish.svg" alt="Publish">
+  <img src="../../images/replay.svg" alt="Replay">
+</div>
+
+---
+
+###### Buffer
+
+![Buffer](../../images/buffer.svg)
+
+---
+
+###### Buffer: moving average
+
+![Buffer moving average](../../images/buffer-movingaverage.svg)
+
+---
+
+###### WindowTrigger
+
+![WindowTrigger](../../images/windowtrigger.svg)
+
+Note:
+A window is a sequence of sequences — the higher-order idea again.
+
+---
+
+###### WindowTrigger: record a triggered clip
+
+![WindowTrigger record clip](../../images/windowtrigger-recordclip.svg)
+
+Note:
+Probably the most directly useful workflow in this deck.
+
+---
+
+### Higher-order operators
+
+![Concatenate video files using first order operators](../../images/concatfile-firstorder.svg)
+
+Note:
+First-order approach: fine for one file. Now do it for a folder of two hundred.
+
+---
+
+### Higher-order operators
+
+![Batch concatenate multiple videos](../../images/higherorder-concatfiles.svg)
+
+Note:
+Enumerate the file names, turn each into a sequence of frames, concatenate the
+sequences. The count of files stops mattering.
+
+---
+
+### Representing discrete states
+
+![States and events](../../images/selectmany-states.svg)
+
+Note:
+State is extended, an event is punctate. A state becomes a *sequence* that
+lives between two events — which is how trial structure gets built tomorrow.
 
 ---
 
 ### Introduction to Harp
 
-The ecosystem around Bonsai:
+![Harp-Bonsai](../../images/bonsai-harp.svg)
 
-* **Bonsai** — the language and editor
-* **Harp** — a protocol and device family for synchronised acquisition
-* **Hobgoblin** — a small, general-purpose Harp board for teaching and prototyping
+[harp-tech.org](https://harp-tech.org/)
 
 Note:
-This is where the Harp talk begins — it is folded into the end of this deck
-rather than being a separate session.
+This is where the Harp talk begins — folded into the end of this deck rather
+than being a separate session.
 
---
+---
 
 ### Why synchronisation is the hard problem
 
-TODO: motivate this. The host computer sees a message *some time after* the
-event happened, and that delay varies. Reconstructing what happened when, across
-several devices, is what breaks naive rigs.
+TODO: the host sees a message *some time after* the event happened, and that
+delay varies. Reconstructing what happened when, across several devices, is
+what breaks naive rigs.
 
---
+---
 
 ### What Harp does about it
 
-TODO: cover the shared clock and hardware timestamping — every event carries the
-time the *device* saw it, so streams from different devices can be aligned
-after the fact.
+TODO: the shared clock and hardware timestamping — every event carries the time
+the *device* saw it, so streams from different devices can be aligned after the
+fact.
 
---
+---
 
 ### The Hobgoblin
 
-TODO: introduce the board the practical session uses, and hand off to the
-Hobgoblin exercises.
+TODO: introduce the board the practical session uses.
 
 [Hobgoblin](../../hobgoblin/index.html)
 
 ---
 
-### Over to the worksheets
+<img class="brand" src="../../images/bonsai-lettering.svg" alt="Bonsai">
+
+### Questions?
 
 [Worksheets](../../worksheets/index.html)
+
+Note:
+Then straight into the hands-on portion.
+
+---
+
+## Appendix
+
+Operator reference — for questions.
+
+---
+
+###### Skip
+
+![Skip](../../images/skip.svg)
+
+---
+
+###### Take
+
+![Take](../../images/take.svg)
+
+---
+
+###### SkipUntil
+
+![SkipUntil](../../images/skipuntil.svg)
+
+---
+
+###### TakeUntil
+
+![TakeUntil](../../images/takeuntil.svg)
+
+---
+
+###### Repeat
+
+![Repeat](../../images/repeat.svg)
+
+---
+
+###### Delay
+
+![Delay](../../images/delay.svg)
+
+---
+
+###### BufferTrigger
+
+![BufferTrigger](../../images/buffertrigger.svg)
+
+---
+
+###### BufferTrigger: signal snapshot
+
+![BufferTrigger snapshot](../../images/buffertrigger-snapshot.svg)
+
+---
+
+###### Window
+
+![Window](../../images/window.svg)
+
+---
+
+###### Merge
+
+![Merge](../../images/merge.svg)
+
+---
+
+###### Concat
+
+![Concat](../../images/concat.svg)
+
+---
+
+###### Merge (sequences)
+
+![Merge window](../../images/mergewindow.svg)
+
+---
+
+###### Concat (sequences)
+
+![Concat window](../../images/concatwindow.svg)
+
+---
+
+###### Switch
+
+![Switch](../../images/switch.svg)
+
+---
+
+### Subject scope
+
+![Subject scope](../../images/subjects-scope.svg)
+
+---
+
+### Subject types
+
+![Subject types](../../images/subjects.svg)
+
+---
+
+### Enumerate files
+
+![Enumerate all file names in a folder](../../images/concatfile-enumeratefiles.svg)
+
+---
+
+### Create observable
+
+![Create sequences of frames from file names](../../images/concatfile-observable.svg)
+
+---
+
+### Concat sequences
+
+![Combine all sequences of frames into a single sequence](../../images/concatfile-combine.svg)
 
         </textarea>
       </section>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="364.42294"
+   height="160"
+   id="SvgGdi_output"
+   version="1.1"
+   sodipodi:docname="graycam.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata29">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3000"
+     inkscape:window-height="1875"
+     id="namedview27"
+     showgrid="false"
+     inkscape:zoom="1.8324818"
+     inkscape:cx="10.29169"
+     inkscape:cy="30.647779"
+     inkscape:window-x="-13"
+     inkscape:window-y="-13"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="SvgGdi_output"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="clips_hatches_and_gradients">
+    <clipPath
+       id="229_text_clipper">
+      <rect
+         x="166"
+         y="76"
+         width="104.49"
+         height="26.389999"
+         id="230" />
+    </clipPath>
+    <clipPath
+       id="241_text_clipper">
+      <rect
+         x="6"
+         y="76"
+         width="83.940002"
+         height="52.790001"
+         id="242" />
+    </clipPath>
+    <clipPath
+       id="247_text_clipper">
+      <rect
+         x="6"
+         y="99.769997"
+         width="83.940002"
+         height="52.790001"
+         id="248" />
+    </clipPath>
+    <clipPath
+       id="229_text_clipper-2">
+      <rect
+         x="166"
+         y="76"
+         width="104.49"
+         height="26.389999"
+         id="230-5" />
+    </clipPath>
+    <clipPath
+       id="241_text_clipper-9">
+      <rect
+         x="6"
+         y="76"
+         width="83.940002"
+         height="52.790001"
+         id="242-3" />
+    </clipPath>
+    <clipPath
+       id="247_text_clipper-6">
+      <rect
+         x="6"
+         y="99.769997"
+         width="83.940002"
+         height="52.790001"
+         id="248-0" />
+    </clipPath>
+    <clipPath
+       id="116_text_clipper">
+      <rect
+         x="488"
+         y="238"
+         width="104.49"
+         height="26.389999"
+         id="117" />
+    </clipPath>
+    <clipPath
+       id="146_text_clipper">
+      <rect
+         x="328"
+         y="238"
+         width="83.940002"
+         height="52.790001"
+         id="147" />
+    </clipPath>
+    <clipPath
+       id="152_text_clipper">
+      <rect
+         x="328"
+         y="261.76999"
+         width="83.940002"
+         height="52.790001"
+         id="153" />
+    </clipPath>
+    <clipPath
+       id="126_text_clipper">
+      <rect
+         x="488"
+         y="398"
+         width="116.41"
+         height="26.389999"
+         id="127" />
+    </clipPath>
+    <clipPath
+       id="160_text_clipper">
+      <rect
+         x="328"
+         y="398"
+         width="80.459999"
+         height="26.389999"
+         id="161" />
+    </clipPath>
+    <clipPath
+       id="177_text_clipper">
+      <rect
+         x="168"
+         y="398"
+         width="104.49"
+         height="26.389999"
+         id="178-1" />
+    </clipPath>
+    <clipPath
+       id="187_text_clipper">
+      <rect
+         x="168"
+         y="558"
+         width="99.559998"
+         height="26.389999"
+         id="188" />
+    </clipPath>
+    <clipPath
+       id="216_text_clipper">
+      <rect
+         x="8"
+         y="398"
+         width="83.940002"
+         height="52.790001"
+         id="217" />
+    </clipPath>
+    <clipPath
+       id="222_text_clipper">
+      <rect
+         x="8"
+         y="421.76999"
+         width="83.940002"
+         height="52.790001"
+         id="223" />
+    </clipPath>
+    <clipPath
+       id="126_text_clipper-6">
+      <rect
+         x="488"
+         y="398"
+         width="116.41"
+         height="26.389999"
+         id="127-4" />
+    </clipPath>
+    <clipPath
+       id="160_text_clipper-5">
+      <rect
+         x="328"
+         y="398"
+         width="80.459999"
+         height="26.389999"
+         id="161-3" />
+    </clipPath>
+    <clipPath
+       id="177_text_clipper-2">
+      <rect
+         x="168"
+         y="398"
+         width="104.49"
+         height="26.389999"
+         id="178-1-3" />
+    </clipPath>
+    <clipPath
+       id="187_text_clipper-7">
+      <rect
+         x="168"
+         y="558"
+         width="99.559998"
+         height="26.389999"
+         id="188-7" />
+    </clipPath>
+    <clipPath
+       id="216_text_clipper-0">
+      <rect
+         x="8"
+         y="398"
+         width="83.940002"
+         height="52.790001"
+         id="217-1" />
+    </clipPath>
+    <clipPath
+       id="222_text_clipper-1">
+      <rect
+         x="8"
+         y="421.76999"
+         width="83.940002"
+         height="52.790001"
+         id="223-2" />
+    </clipPath>
+  </defs>
+  <g
+     id="g1239"
+     transform="translate(61.06432,-133.45732)">
+    <line
+       y1="152.12769"
+       style="fill:none;stroke:#a9a9a9;stroke-width:1.24469066;stroke-miterlimit:9"
+       id="92"
+       x2="33.532173"
+       y2="152.12769"
+       x1="-18.744837" />
+    <circle
+       id="172"
+       cy="152.12769"
+       cx="57.181293"
+       style="fill:#449adf;stroke-width:1.24469066"
+       r="18.670361" />
+    <path
+       d="M 61.440626,149.6383 55.234225,156.48485 52.022798,153.35594 46.601548,158.97361 68.330113,158.95583 Z"
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:1.24469066"
+       id="173"
+       inkscape:connector-curvature="0" />
+    <circle
+       id="174-5"
+       cy="147.09914"
+       cx="52.102955"
+       style="fill:#ffffff;stroke-width:1.24469066"
+       r="3.4228992" />
+    <text
+       transform="matrix(0.62234533,0,0,0.62234533,-66.043081,-70.671945)"
+       id="175"
+       x="168"
+       y="398"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       clip-path="url(#177_text_clipper-2)">
+      <tspan
+         dy="15.75pt"
+         id="179-9">Grayscale</tspan>
+    </text>
+    <path
+       d="M -22.256108,139.92971 C -17.502012,147.26318 -17.523297,156.71063 -22.310227,164.02319"
+       style="fill:none;stroke:#a9a9a9;stroke-width:2.48938131;stroke-miterlimit:9"
+       id="210-9"
+       inkscape:connector-curvature="0" />
+    <circle
+       id="211"
+       cy="152.12769"
+       cx="-42.393959"
+       style="fill:#5bb27e;stroke-width:1.24469066"
+       r="18.670361" />
+    <path
+       d="M -31.502915,144.78401 -36.719787,147.79753 V 156.35179 L -31.502915,159.36519 Z"
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:1.24469066"
+       id="212"
+       inkscape:connector-curvature="0" />
+    <path
+       d="M -50.244596,144.90848 H -41.498528 C -39.668086,144.90848 -38.194497,146.44405 -38.194497,148.35142 V 155.64194 C -38.194497,157.54931 -39.668086,159.08463 -41.498528,159.08463 H -50.244595 C -52.075037,159.08463 -53.548626,157.54931 -53.548626,155.64194 V 148.35142 C -53.548626,146.44405 -52.075037,144.90848 -50.244595,144.90848 Z"
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:1.24469066"
+       id="213-6"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="matrix(0.62234533,0,0,0.62234533,-66.043081,-70.671945)"
+       id="214"
+       x="8"
+       y="398"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       clip-path="url(#216_text_clipper-0)">
+      <tspan
+         dy="15.75pt"
+         id="218">Camera</tspan>
+    </text>
+    <text
+       transform="matrix(0.62234533,0,0,0.62234533,-66.043081,-70.671945)"
+       id="220"
+       x="8"
+       y="421.76999"
+       style="font-size:21px;font-family:'Microsoft Sans Serif';fill:#000000"
+       clip-path="url(#222_text_clipper-1)">
+      <tspan
+         dy="15.75pt"
+         id="224">Capture</tspan>
+    </text>
+  </g>
+</svg>

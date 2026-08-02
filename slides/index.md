@@ -14,8 +14,13 @@ Talk decks for the workshop. Each deck is a self-contained
 | [Template deck](decks/template.html) | Empty starting point — copy this to begin a new talk. |
 
 > [!NOTE]
-> These are templates. Replace the placeholder content with the real talk
-> material before the workshop.
+> The Bonsai and Harp deck still has placeholder Harp slides at the end, and the
+> best-practices talk has not been written yet.
+
+The workflow and marble diagrams are reused from the
+[St Andrews 2024 Bonsai course](https://github.com/neurogears/st-andrews-2024)
+by NeuroGEARS Ltd., licensed
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Presenting
 
