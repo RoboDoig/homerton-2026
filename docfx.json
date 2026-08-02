@@ -10,6 +10,7 @@
           "_site/**",
           "**/README.md",
           "OUTLINE.md",
+          "*-notes.md",
           "slides/decks/**",
           ".github/**",
           "template/**"

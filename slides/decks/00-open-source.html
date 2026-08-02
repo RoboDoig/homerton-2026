@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Open-Source — Homerton 2026</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown
+               data-separator="^\n---\n$"
+               data-separator-vertical="^\n--\n$"
+               data-separator-notes="^Note:">
+        <textarea data-template>
+
+### Introduction to Open-Source
+
+NeuroGEARS
+
+Homerton College, Cambridge — 4th August 2026
+
+Note:
+Asked to talk about open-source in general, and Bonsai specifically.
+
+---
+
+### Today
+
+* Open-source — briefly
+* Bonsai and Harp
+* Hands-on for the rest of the session
+
+Note:
+Most people here already know what open-source is. Humour me for a few minutes,
+then we get to the software and hardware I actually work on.
+
+Newcomers: I hope to show you how powerful a tool this can be for the kinds of
+experiments we do in neuroscience. Existing users: I hope to show you something
+new to take back to your lab.
+
+---
+
+### What is open-source?
+
+Code, hardware, writing — made public so anyone can
+
+* **use** it
+* **distribute** it
+* **modify** it
+
+...for pretty much any purpose.
+
+--
+
+### And — for me — a record of its own history
+
+Not in the strict definition. Important anyway.
+
+Note:
+A GitHub repository has the complete history of every change up to the present
+state. You can rewind through a project and watch the thought process evolve.
+
+--
+
+### Learn from the struggle, not just the polish
+
+Note:
+Part of the spirit is that these projects are public for everyone's benefit —
+not only to *use*, but to **learn** from.
+
+You can learn a great deal from a finished, polished project. You can learn far
+more from the failures along the way and the individual decisions that got the
+developer to that final point.
+
+---
+
+### Why open-source?
+
+Science is already supposed to work this way
+
+* Transparent about how we get from theory to result
+* Publish papers, give talks — so people can build on the ideas
+* Share the raw data
+
+Note:
+Knowledge shouldn't be hoarded. Things work better and progress faster when we
+share, when we freely lay foundations for other people's future work.
+
+Researchers tend to already understand this impulse intuitively.
+
+--
+
+### Where the ideal stops: money
+
+* Big tech, pharma, private research
+* Proprietary instrument software
+* MATLAB — share your code, rent the environment
+
+Note:
+Obvious reasons for the walls. On a smaller scale, you may have met this with
+software that runs a microscope. Or MATLAB: you can share all your code, but
+running it requires payment, and you can't modify it to suit your own needs.
+
+---
+
+### Closed-source is **annoying**
+
+Often reason enough — even eclipsing the lofty ideals.
+
+--
+
+### A pockels cell, miscapitalised
+
+* Burning samples on a 2p microscope
+* Weeks of back-and-forth to prove it was a bug
+* The fix: one string, capitalised
+
+Note:
+No recourse but to contact the company. Provide evidence over weeks. They
+haven't seen this complaint before, so they're sceptical. Eventually they agree
+something is wrong — then their own internal fix-and-test process, a few more
+weeks. Meanwhile their engineers are pulled onto a new feature and the fix slips.
+
+Anticipated objection: "it's a big complicated codebase, open-source or not it'd
+take you just as long to find, and you'd void the hardware warranty." Maybe. But
+this was literally a typo in an internal name.
+
+--
+
+### Lose–lose
+
+* I waste time, and get no data
+* Their engineers stop working on what matters
+
+Note:
+Because I'm sending emails every day. Nobody wins.
+
+---
+
+### Which brings us to Bonsai and Harp
+
+Born, to some degree, out of exactly this annoyance.
+
+--
+
+### Scientists should own their own tools
+
+Freely take them apart, rearrange them, understand them.
+
+Note:
+The NeuroGEARS ethos. Partly a benevolent philosophy about collaboration and
+openness — but also just a desire for freedom from being annoyed all the time,
+and for real control over what you do in the lab.
+
+---
+
+### Over to Bonsai
+
+[Introduction to Bonsai and Harp](01-introduction.html)
+
+Note:
+Crash course, then the hands-on portion.
+
+        </textarea>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>

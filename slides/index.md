@@ -9,6 +9,7 @@ Talk decks for the workshop. Each deck is a self-contained
 
 | Deck | Description |
 | --- | --- |
+| [Introduction to Open-Source](decks/00-open-source.html) | What open-source is, why it matters in research, and where Bonsai and Harp come from. |
 | [Introduction to Bonsai and Harp](decks/01-introduction.html) | What visual reactive programming is, how to read a Bonsai workflow, and an introduction to Harp at the end. |
 | [Template deck](decks/template.html) | Empty starting point — copy this to begin a new talk. |
 
