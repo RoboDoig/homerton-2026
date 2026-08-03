@@ -15,6 +15,12 @@ Packages/
 # deliberately, so the workflows open with the right visualizers.
 *.editor
 
+# Data recorded while testing workflows in sandbox/. Only the workflows themselves
+# are committed, never their output.
+sandbox/*.csv
+sandbox/*.avi
+sandbox/*.bin
+
 # Build output from Bonsai script extensions
 Extensions/bin/
 Extensions/obj/

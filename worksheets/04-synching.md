@@ -11,9 +11,9 @@ problems encountered in systems neuroscience experiments, and how to handle them
 using Bonsai.
 
 > [!NOTE]
-> Exercise 2 has been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercises 3 to 6 still use the Arduino `AnalogInput` source and its wiring, and are
-> being rewritten.
+> Exercises 2 to 4 have been converted to the [Hobgoblin](../hobgoblin/index.md).
+> Exercise 5 still uses the Arduino `AnalogInput` source and its wiring, and is being
+> rewritten.
 
 ### **Exercise 1:** Synchronizing video from two webcams
 
@@ -120,70 +120,142 @@ We will start by using a fixed-interval blinking LED as our stimulus.
 
 ### **Exercise 3:** Measuring reaction time
 
-![Reaction Time Measurement](../images/reaction-time-measurement.svg)
+Completed workflow: [`04-synching-03.bonsai`](../workflows/04-synching-03.bonsai)
 
-* Insert an `AnalogInput` source.
-* Set the `Pin` property to the analog pin number where the duplicate LED wire is
-  connected.
-* Insert a second `AnalogInput` source.
-* Set the `Pin` property to the analog pin number where the button is connected.
-* Connect both inputs to a `Zip` operator.
-* Insert a `CsvWriter` sink and configure the `FileName` property.
-* Insert a `RollingGraph` visualizer and set its `Capacity` property to 1000.
-* Run the workflow, and verify that both the stimulus and the button are correctly
-  recorded.
+A reaction time is the interval between stimulus onset and the button press. With the
+Arduino we had to infer both from analog traces sampled at a fixed interval, which
+means the best resolution we could hope for was the sampling interval itself. A Harp
+device removes that constraint: every message it exchanges with the host carries a
+hardware timestamp taken from the device clock, so we can read the two times directly
+and subtract them.
 
-### **Exercise 4:** Synchronizing video with a visual stimulus
+Continue from your Exercise 2 workflow, leaving the stimulus chain untouched.
 
-To analyze movement dynamics in the reaction time task, you will need to align
-individual frame timing to stimulus onset. To do this, you can take advantage of the
-fact that our simple visual stimulus can be seen in the camera image and recorded
-together with the behaviour.
+#### Timestamping the button press
 
-![Synching LED](../images/synching-led.svg)
+* Insert a `SubscribeSubject` and set its `Name` property to `Events`.
+* Insert a `Parse` transform and set its `Register` property to
+  `TimestampedDigitalInputState`.
+* Insert a `Condition` operator and set its `Name` property to `ButtonPress`.
+  Double-click it and build the following inside: a `MemberSelector` set to `Value`,
+  followed by an `Equal` transform with its `Value` property set to `GP2`.
+* After the `ButtonPress` condition, insert a `MemberSelector` and set its `Selector`
+  property to `Seconds`.
 
-* Starting from the workflow in the previous exercise, insert a `CameraCapture`
-  source and position the camera such that you can see clearly both the LED and the
-  computer keyboard.
-* Insert a `VideoWriter` sink and configure the `FileName` with a path ending in `.avi`.
-* Insert a `Crop` transform and set the `RegionOfInterest` property to a small area
-  around the LED.
-* Insert a `Grayscale` transform.
-* Insert a `Sum (Dsp)` transform. This operator will sum the brightness values of
-  all the pixels in the input image.
-* Select the `Scalar` > `Val0` field from the right-click context menu.
-* Record the output in a text file using a `CsvWriter` sink.
-* Open both the text file containing the Arduino data, and the text file containing
-  video data, and verify that you have detected an equal number of stimuli in both
-  files. **Question:** what can you conclude from these two pieces of data?
-* **Optional:** Open the raw video file and find the exact frame where the stimulus
-  came on. If you compare different trials you might notice that the brightness of
-  the LED in that first frame across two different trials is different. Why is that?
+> [!NOTE]
+> The `Timestamped` variant of a register wraps the payload in a structure with two
+> members: `Value`, the register contents, and `Seconds`, the device time at which the
+> board recorded it. That is why the condition has to select `Value` before comparing
+> it, and why we can pull `Seconds` straight out afterwards.
+>
+> Comparing the input state to `GP2` with `Equal` — rather than masking with
+> `BitwiseAnd` as we did in the closed-loop worksheet — also filters out the release:
+> when the button is let go the register reads 0, which is not equal to `GP2`, so only
+> the press passes through.
 
-### **Exercise 5:** Trigger a visual stimulus using a button
+#### Timestamping the stimulus
 
-To make our task more interesting, we will now trigger the stimulus manually using
-a key press, and learn more about `SelectMany` along the way.
+* In a new branch from the `SubscribeSubject`, insert a second `Parse` transform and
+  set its `Register` property to `TimestampedDigitalOutputSet`.
+* Insert a `MemberSelector` and set its `Selector` property to `Seconds`.
 
-![Triggered Stimulus Outer](../images/triggered-stimulus-outer.svg)
+> [!NOTE]
+> The board reports the writes it receives as well as the inputs it reads, so the same
+> `Events` sequence tells us when `GP22` actually went high — timestamped on the
+> device, not on the host. Both numbers therefore come from the same clock, and their
+> difference is unaffected by however long the USB and operating system took to deliver
+> either message.
 
-* Insert a `KeyDown` source and set its `Filter` property to a keyboard key of choice.
-* Insert a `SelectMany` operator and move the stimulus generation logic inside the
-  nested node:
+#### Computing the reaction time
 
-![Triggered Stimulus Inner](../images/triggered-stimulus-inner.svg)
+* Connect both `Seconds` branches to a `Zip` operator, with the button press as
+  `Source1` and the stimulus onset as `Source2`.
+* Insert a `Subtract` transform.
+* Insert a `CsvWriter` sink and configure the `FileName` property, e.g. `times.csv`.
+* Run the workflow, press the button after each blink, and check the values arriving at
+  the `Subtract` output. They should be plausible reaction times — a few hundred
+  milliseconds, expressed in seconds.
 
-* **Question:** why do we need to remove the `Repeat` operator?
-* Ask a friend to test your reaction time.
-* **Optional:** In the current workflow, what happens if you press the stimulus key
-  twice in succession? Can you fix the current behaviour by using one of the
-  higher-order operators?
+> [!WARNING]
+> `Zip` pairs its inputs strictly by position: the first stimulus with the first press,
+> the second with the second, and so on. It has no idea that the two events are supposed
+> to belong to the same trial. Miss a single button press and every pair after it is
+> shifted by one trial — each press is subtracted from the *previous* stimulus, so the
+> numbers stay plausible while being wrong for the whole rest of the run. Press twice in
+> one trial and it goes out of step in the other direction.
+>
+> This is fine for a first measurement where you know you responded to every blink, but
+> it is not a trial structure. Handling misses and spurious presses properly means
+> making the pairing explicit — matching each press to the stimulus that preceded it, and
+> deciding what a trial with no press should produce — which is what the
+> [state machines worksheet](05-state-machines.md) builds.
 
-### **Exercise 6:** Recording response-triggered videos
+> [!NOTE]
+> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
+> with **File → Export Image** and save it as `images/reaction-time-measurement-hobgoblin.svg`.
+> The old Arduino figure (`images/reaction-time-measurement.svg`) is kept for reference
+> until the new one is in place.
+
+### **Exercise 4:** Trigger a visual stimulus using a button
+
+Completed workflow: [`04-synching-04.bonsai`](../workflows/04-synching-04.bonsai)
+
+So far the stimulus has run on its own, once a second, forever. To make our task more
+interesting, we will now trigger each trial manually with a key press, and learn more
+about `SelectMany` along the way. The measurement branch from Exercise 3 stays exactly
+as it is — only the stimulus changes.
+
+* Insert a `KeyDown` source and set its `Filter` property to a keyboard key of choice,
+  e.g. `A`.
+* Insert a `SelectMany` operator after it and set its `Name` property to `Stimulus`.
+* Double-click the `SelectMany` and move the whole stimulus chain from Exercise 2
+  inside it: `Timer` (`DueTime` 1 second) → `CreateMessage` (`DigitalOutputSet` `GP22`)
+  → `MulticastSubject Commands` → `Delay` (200 ms) → `CreateMessage`
+  (`DigitalOutputClear` `GP22`) → `MulticastSubject Commands`, with the last node
+  connected to `WorkflowOutput`.
+* Delete the `Repeat` operator.
+* Run the workflow and check that pressing the key produces one blink a second later.
+
+> [!NOTE]
+> `SelectMany` runs a fresh copy of its nested workflow for every event it receives.
+> Each key press therefore starts one complete stimulus sequence, and `Repeat` is no
+> longer needed — repetition now comes from you pressing the key again rather than from
+> the operator restarting the sequence.
+>
+> Note that the `Source1` input inside the nested workflow is left unconnected. The
+> nested sequence does not care *what* the key press was, only that one happened, and
+> the `Timer` inside is a source in its own right. This is a common pattern: a
+> `SelectMany` used purely as "start this whole sequence, now".
+
+* **Question:** the `Timer` used to space out trials, with `Repeat` looping back to it.
+  What does its `DueTime` mean now that it sits inside `SelectMany`?
+* Ask a friend to test your reaction time, and check the values landing in `times.csv`.
+* **Optional:** what happens if you press the stimulus key twice in quick succession, or
+  simply hold it down? Look at the `SuppressRepetitions` property of `KeyDown`, and
+  think about which higher-order operator would let you ignore a new trigger while a
+  trial is still in progress.
+
+> [!WARNING]
+> Overlapping trials break the `Zip` pairing described in Exercise 3 in a second way:
+> two stimuli with only one press between them leaves the sequences out of step for the
+> rest of the run.
+
+> [!NOTE]
+> **TODO:** this exercise needs workflow figures. Export the outer workflow and the
+> contents of the `Stimulus` node from the Bonsai editor with **File → Export Image**,
+> saving them as `images/triggered-stimulus-outer-hobgoblin.svg` and
+> `images/triggered-stimulus-inner-hobgoblin.svg`. The old Arduino figures
+> (`images/triggered-stimulus-outer.svg`, `images/triggered-stimulus-inner.svg`) are
+> kept for reference until the new ones are in place.
+
+### **Exercise 5:** Recording response-triggered videos
 
 ![Triggered Video Outer](../images/triggered-video-outer.svg)
 
-* Starting from the previous workflow, insert another `AnalogInput` source with the
+* Starting from the previous workflow, insert a `CameraCapture` source and position the
+  camera so that you can see both the LED and the computer keyboard.
+* Insert a `VideoWriter` sink and configure the `FileName` with a path ending in `.avi`.
+* Insert another `AnalogInput` source with the
   `Pin` property set to the button press pin number.
 * Insert a `GreaterThan` operator.
 * Insert a `DistinctUntilChanged` operator.
