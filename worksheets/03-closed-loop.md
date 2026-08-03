@@ -13,8 +13,8 @@ data processing capabilities of Bonsai to create and benchmark many different
 kinds of closed-loop systems.
 
 > [!NOTE]
-> Exercises 1 and 2 have been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercises 3 to 6 still use an Arduino and are being rewritten.
+> Exercises 1 to 3 have been converted to the [Hobgoblin](../hobgoblin/index.md).
+> Exercises 4 to 6 still use an Arduino and are being rewritten.
 
 ## Measuring closed-loop latency
 
@@ -229,24 +229,34 @@ trip allows.
 
 ## Closed-loop control
 
-### **Exercise 3:** Triggering a digital line based on region of interest activity
+### **Exercise 3 (challenge):** Triggering a digital line based on region of interest activity
 
-![Triggering a digital line on ROI activity](../images/closed-loop-roi.svg)
+Exercise 2 already contains everything you need for a working closed loop: a region of
+the camera view is reduced to a single number, that number is thresholded into a
+boolean, and the boolean drives `GP22` on the board. The only reason it flickers is
+that we deliberately pointed the camera at the LED it controls.
 
-* Insert a `CameraCapture` source.
-* Insert a `Crop` transform.
-* Run the workflow and use the `RegionOfInterest` property to specify the desired area.
-* Insert a `Grayscale` and a `Threshold (Vision)` transform (or the colour
-  segmentation operators).
-* Insert a `Sum (Dsp)` transform, and select the `Val0` field from the output.
-* Insert a `GreaterThan` transform and configure the `Value` property to an
-  appropriate threshold. Remember you can use the visualizers to see what values
-  are coming through the `Sum` and what the result of the `GreaterThan` operator is.
-* Insert the Arduino `DigitalOutput` sink.
-* Set the `Pin` property of the `DigitalOutput` operator to 13.
-* Configure the `PortName` property.
-* Run the workflow and verify that entering the region of interest triggers the
-  Arduino LED.
+**The challenge:** starting from your Exercise 2 workflow, make the LED turn on while
+there is *activity* in a chosen region of the camera view — for example when you move
+your hand through it — and turn off again when the region is clear.
+
+> [!TIP]
+> **Hints**
+>
+> * Point the camera at the scene rather than at the LED, and use `Crop` to select the
+>   region you care about.
+> * `Sum (Dsp)` on a raw colour image is a blunt instrument. Experiment with
+>   `Grayscale` and `Threshold (Vision)` before summing, so that the value you
+>   threshold reflects how much of the region changed rather than its overall
+>   brightness. On a single-channel image the sum is in the `Val0` field.
+> * Use the visualizers as you build: check what values come out of `Sum` with the
+>   region empty and with your hand in it, and pick the `GreaterThan` threshold from
+>   those two ranges.
+> * Think about the polarity of the two `Condition` branches. In Exercise 2 detecting
+>   light *extinguished* the LED; here detecting activity should *light* it.
+> * `DistinctUntilChanged` is still worth keeping, so the board only receives a command
+>   when the state actually changes.
+
 * **Optional:** Replace the `Crop` transform with a `CropPolygon` to allow for
   non-rectangular regions.
 
