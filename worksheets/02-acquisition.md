@@ -59,4 +59,5 @@ channels and columns are time.
 > Placeholder content adapted from the St Andrews 2024 course. Replace the
 > exercises with the workshop's final material and add workflow figures.
 
-Next: bring in real hardware with the [Hobgoblin](../hobgoblin/index.md).
+Next: [Closed-Loop Systems](03-closed-loop.md). To bring in real hardware, see the
+[Hobgoblin](../hobgoblin/index.md) section.

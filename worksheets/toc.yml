@@ -4,5 +4,11 @@
   href: 01-getting-started.md
 - name: 2 — Acquisition and Tracking
   href: 02-acquisition.md
+- name: 3 — Closed-Loop Systems
+  href: 03-closed-loop.md
+- name: 4 — Data Synchronization
+  href: 04-synching.md
+- name: 5 — State Machines
+  href: 05-state-machines.md
 - name: Worksheet template
   href: template.md
