@@ -14,7 +14,7 @@ kinds of closed-loop systems.
 
 > [!NOTE]
 > Exercises 1 to 3 have been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercises 4 to 6 still use an Arduino and are being rewritten.
+> Exercises 4 and 5 use the camera and the host only, so they need no changes.
 
 ## Measuring closed-loop latency
 
@@ -110,7 +110,7 @@ allows.
 > **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
 > with **File → Export Image** and save it as `images/closed-loop-latency-hobgoblin.svg`.
 > The old Arduino figure (`images/closed-loop-latency-arduino.svg`) is kept for
-> reference while the remaining exercises are converted.
+> reference until the new one is in place.
 
 ### **Exercise 2:** Measuring video acquisition latency
 
@@ -225,7 +225,7 @@ trip allows.
 > **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
 > with **File → Export Image** and save it as `images/closed-loop-latency-video-hobgoblin.svg`.
 > The old Arduino figure (`images/closed-loop-latency-video.svg`) is kept for
-> reference while the remaining exercises are converted.
+> reference until the new one is in place.
 
 ## Closed-loop control
 
@@ -326,52 +326,7 @@ target would be the length of that vector.
 > property. In this case, a small distance will generate a large output, and a large
 > distance will produce a small output.
 
-### **Exercise 5:** Triggering a digital line based on distance between objects
-
-![Triggering a digital line based on distance between objects](../images/closed-loop-trigger.svg)
-
-* Reproduce the above object tracking workflow using `FindContours` and
-  `BinaryRegionAnalysis`.
-* Insert a `SortBinaryRegions` transform. This operator will sort the list of
-  objects by area, in order of largest to smallest.
-
-To calculate the distance between the two largest objects in every frame you will
-need to take into account some special cases. Specifically, there is the
-possibility that no object is detected, or that the two objects may be touching
-each other and will be detected as a single object. You can develop a new operator
-in order to perform this specific calculation.
-
-* Insert a `PythonTransform` operator. Change the `Script` property to the
-  following code:
-
-```python
-from math import sqrt
-
-@returns(float)
-def process(value):
-
-  # no objects were detected
-  if value.Count == 0:
-    return float.NaN
-
-  # only one object was detected, assume objects are touching
-  elif value.Count == 1:
-    return 0
-
-  # two or more objects were detected, compute distance
-  else:
-    # d: displacement between two largest objects
-    d = value[0].Centroid - value[1].Centroid
-    return sqrt(d.X * d.X + d.Y * d.Y)
-```
-
-* Insert a `LessThan` transform and configure the `Value` property to an
-  appropriate threshold.
-* Connect the boolean output to Arduino pin 13 using a `DigitalOutput` sink.
-* Run the workflow and verify that the Arduino LED is triggered when the two
-  objects are close together.
-
-### **Exercise 6:** Centring the video on a tracked object
+### **Exercise 5:** Centring the video on a tracked object
 
 ![Shifting the video using warp affine](../images/closed-loop-warpaffine.svg)
 
