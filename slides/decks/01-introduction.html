@@ -346,25 +346,31 @@ than being a separate session.
 
 ---
 
-### Why synchronisation is the hard problem
+### Synchronisation is hard
 
-TODO: the host sees a message *some time after* the event happened, and that
-delay varies. Reconstructing what happened when, across several devices, is
-what breaks naive rigs.
+* Different devices operate on isolated clocks
+* We can synchronise by passing 'markers' between devices
+* The difficulty of interpreting these markers scales supralinearly with number of devices
 
 ---
 
 ### What Harp does about it
 
-TODO: the shared clock and hardware timestamping — every event carries the time
-the *device* saw it, so streams from different devices can be aligned after the
-fact.
+* Shares a clock signal between devices
+* Explicitly attaches timestamps to samples
+* Reports events asynchronously
+
+---
+
+### Harp is open source
+
+* The devices, the protocol, and the firmware
+* You can build your own device on the protocol
+* It then synchronises natively with every other Harp device
 
 ---
 
 ### The Hobgoblin
-
-TODO: introduce the board the practical session uses.
 
 [Hobgoblin](../../hobgoblin/index.html)
 
