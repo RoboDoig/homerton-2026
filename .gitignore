@@ -4,11 +4,27 @@ api/**/*.yml
 api/.manifest
 log.txt
 
-# Bonsai local environment
-.bonsai/Bonsai.exe
-.bonsai/Bonsai.exe.settings
-.bonsai/Packages/
-.bonsai/Extensions/
+# Bonsai environments. Unanchored so they match a .bonsai folder at any depth,
+# not just the repository root. Bonsai.config, NuGet.config and the Setup scripts
+# are committed — the Setup script regenerates everything ignored here.
+*.exe
+*.exe.*
+Packages/
+
+# Per-user Bonsai editor window state. Visualizer layouts (*.layout) are kept
+# deliberately, so the workflows open with the right visualizers.
+*.editor
+
+# Data recorded while testing workflows in sandbox/. Only the workflows themselves
+# are committed, never their output.
+sandbox/*.csv
+sandbox/*.avi
+sandbox/*.bin
+
+# Build output from Bonsai script extensions
+Extensions/bin/
+Extensions/obj/
+
 *.bonsai.layout.bak
 
 # Personal prep notes — kept local, and excluded from the docfx build in case
