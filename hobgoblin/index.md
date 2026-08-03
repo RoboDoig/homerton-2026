@@ -4,6 +4,8 @@ title: Hobgoblin
 
 # Hobgoblin
 
+![The Harp Hobgoblin: a Raspberry Pi Pico 2 on a Gravity expansion board, with its digital, analog, I2C, UART and SPI connectors labelled](../images/device-hobgoblin-pico2.png)
+
 The practical sessions use the **Harp Hobgoblin**, a simple multi-purpose device designed
 for learning the fundamentals of the [Harp](https://harp-tech.org) ecosystem. It is a
 Raspberry Pi Pico 2 carrying a
