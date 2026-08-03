@@ -11,8 +11,8 @@ problems encountered in systems neuroscience experiments, and how to handle them
 using Bonsai.
 
 > [!NOTE]
-> Exercises 2 to 5 use the [Hobgoblin](../hobgoblin/index.md). Exercise 1 needs only two
-> webcams.
+> Exercises 2 to 5 use the [Hobgoblin](../hobgoblin/index.md). Exercise 1 needs two cameras,
+> this can be skipped if two are not available.
 
 ### **Exercise 1:** Synchronizing video from two webcams
 
@@ -52,6 +52,8 @@ the ITI state for the next trial.
 
 Completed workflow: [`04-synching-02.bonsai`](../workflows/04-synching-02.bonsai)
 
+![Generating a fixed-interval stimulus](../images/reaction-time-stimulus-hobgoblin.svg)
+
 In this first exercise, you will assemble the basic hardware and software
 components required to implement the reaction time task.
 
@@ -63,13 +65,6 @@ components required to implement the reaction time task.
 | Push button (response) | `GP2` | Exercise 3 |
 
 Wire both now, so you do not have to take the board apart between exercises.
-
-> [!NOTE]
-> Unlike the Arduino version of this task, there is no need to duplicate the LED wire
-> into an analog input to record the stimulus. The Hobgoblin timestamps every message
-> it exchanges with the host, so the commands that drive `GP22` and the events reported
-> by `GP2` already arrive with device time attached — which is the whole point of the
-> exercises that follow.
 
 #### Setting up the device
 
@@ -91,9 +86,8 @@ We will start by using a fixed-interval blinking LED as our stimulus.
 
 > [!NOTE]
 > With an input connected, `CreateMessage` turns every event it receives into a Harp
-> message — here, one "raise `GP22`" command per timer tick. Multicasting that message
-> to `Commands` sends it to the board, which is how a Harp device replaces the Arduino
-> `DigitalOutput` sink.
+> message — here, one "raise `GP22`" command per timer event. Multicasting that message
+> to `Commands` sends it to the board.
 
 * Insert a `Delay` operator and set its `DueTime` property to 200 milliseconds.
 * Insert a second `CreateMessage` operator. Set its `MessageType` property to `Write`,
@@ -110,23 +104,11 @@ We will start by using a fixed-interval blinking LED as our stimulus.
 > `Events` yet — the stimulus is open-loop, and the next exercises add the recording
 > and the response.
 
-> [!NOTE]
-> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
-> with **File → Export Image** and save it as `images/reaction-time-stimulus-hobgoblin.svg`.
-> The old Arduino figures (`images/create-arduino.svg`,
-> `images/reaction-time-stimulus.svg` and `images/reaction-time-circuit.png`) are kept
-> for reference until the remaining exercises are converted.
-
 ### **Exercise 3:** Measuring reaction time
 
 Completed workflow: [`04-synching-03.bonsai`](../workflows/04-synching-03.bonsai)
 
-A reaction time is the interval between stimulus onset and the button press. With the
-Arduino we had to infer both from analog traces sampled at a fixed interval, which
-means the best resolution we could hope for was the sampling interval itself. A Harp
-device removes that constraint: every message it exchanges with the host carries a
-hardware timestamp taken from the device clock, so we can read the two times directly
-and subtract them.
+![Measuring reaction time](../images/reaction-time-measurement-hobgoblin.svg)
 
 Continue from your Exercise 2 workflow, leaving the stimulus chain untouched.
 
@@ -189,15 +171,11 @@ Continue from your Exercise 2 workflow, leaving the stimulus chain untouched.
 > deciding what a trial with no press should produce — which is what the
 > [state machines worksheet](05-state-machines.md) builds.
 
-> [!NOTE]
-> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
-> with **File → Export Image** and save it as `images/reaction-time-measurement-hobgoblin.svg`.
-> The old Arduino figure (`images/reaction-time-measurement.svg`) is kept for reference
-> until the new one is in place.
-
 ### **Exercise 4:** Trigger a visual stimulus using a button
 
 Completed workflow: [`04-synching-04.bonsai`](../workflows/04-synching-04.bonsai)
+
+![Triggering the stimulus from a key press](../images/triggered-stimulus-outer-hobgoblin.svg)
 
 So far the stimulus has run on its own, once a second, forever. To make our task more
 interesting, we will now trigger each trial manually with a key press, and learn more
@@ -207,6 +185,11 @@ as it is — only the stimulus changes.
 * Insert a `KeyDown` source and set its `Filter` property to a keyboard key of choice,
   e.g. `A`.
 * Insert a `SelectMany` operator after it and set its `Name` property to `Stimulus`.
+
+**Inside `Stimulus`:**
+
+![Inside the Stimulus node](../images/triggered-stimulus-inner-hobgoblin.svg)
+
 * Double-click the `SelectMany` and move the whole stimulus chain from Exercise 2
   inside it: `Timer` (`DueTime` 1 second) → `CreateMessage` (`DigitalOutputSet` `GP22`)
   → `MulticastSubject Commands` → `Delay` (200 ms) → `CreateMessage`
@@ -224,7 +207,7 @@ as it is — only the stimulus changes.
 > Note that the `Source1` input inside the nested workflow is left unconnected. The
 > nested sequence does not care *what* the key press was, only that one happened, and
 > the `Timer` inside is a source in its own right. This is a common pattern: a
-> `SelectMany` used purely as "start this whole sequence, now".
+> `SelectMany` that ignores its input in favor of a new source started initialised within.
 
 * **Question:** the `Timer` used to space out trials, with `Repeat` looping back to it.
   What does its `DueTime` mean now that it sits inside `SelectMany`?
@@ -239,17 +222,11 @@ as it is — only the stimulus changes.
 > two stimuli with only one press between them leaves the sequences out of step for the
 > rest of the run.
 
-> [!NOTE]
-> **TODO:** this exercise needs workflow figures. Export the outer workflow and the
-> contents of the `Stimulus` node from the Bonsai editor with **File → Export Image**,
-> saving them as `images/triggered-stimulus-outer-hobgoblin.svg` and
-> `images/triggered-stimulus-inner-hobgoblin.svg`. The old Arduino figures
-> (`images/triggered-stimulus-outer.svg`, `images/triggered-stimulus-inner.svg`) are
-> kept for reference until the new ones are in place.
-
 ### **Exercise 5:** Recording response-triggered videos
 
 Completed workflow: [`04-synching-05.bonsai`](../workflows/04-synching-05.bonsai)
+
+![Recording response-triggered videos](../images/triggered-video-outer-hobgoblin.svg)
 
 Recording video continuously for a whole session produces enormous files, most of them
 showing nothing of interest. Instead we will record a short clip around each response,
@@ -277,11 +254,6 @@ alone.
   `MemberSelector` set to `Value` followed by an `Equal` transform set to `GP2` — the
   same detection you built in Exercise 3.
 
-> [!TIP]
-> This is now the second copy of that branch in the workflow. If you would rather not
-> repeat it, publish the presses once with a `PublishSubject` named `ButtonPress` and
-> subscribe to it in both places.
-
 #### Cutting and writing the clips
 
 * Insert a `WindowTrigger` operator, with the delayed frames as `Source1` and the button
@@ -294,6 +266,11 @@ alone.
 > which precedes the press, thanks to the `Delay`.
 
 * Insert a `SelectMany` operator and set its `Name` property to `LogVideo`.
+
+**Inside `LogVideo`:**
+
+![Inside the LogVideo node](../images/triggered-video-inner-hobgoblin.svg)
+
 * Double-click it and insert a `VideoWriter` sink between `Source1` and
   `WorkflowOutput`. Configure the `FileName` with a path ending in `.avi`, e.g.
   `press.avi`, and set the `Suffix` property to `Timestamp`.
@@ -308,13 +285,5 @@ alone.
 * Inspect the clips frame by frame and check whether the LED comes on at exactly the
   same frame number across different trials.
 * **Question:** if it does not, why would this happen? And how would you fix it?
-
-> [!NOTE]
-> **TODO:** this exercise needs workflow figures. Export the outer workflow and the
-> contents of the `LogVideo` node from the Bonsai editor with **File → Export Image**,
-> saving them as `images/triggered-video-outer-hobgoblin.svg` and
-> `images/triggered-video-inner-hobgoblin.svg`. The old Arduino figures
-> (`images/triggered-video-outer.svg`, `images/triggered-video-inner.svg`) are kept for
-> reference until the new ones are in place.
 
 Next: [State Machines](05-state-machines.md).
