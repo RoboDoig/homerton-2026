@@ -30,6 +30,16 @@ system, also known as the round-trip time.
 
 Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.bonsai)
 
+> [!TIP]
+> The "completed workflow" links in these worksheets open the raw XML of a `.bonsai` file
+> in your browser. That XML *is* the workflow: select all of it, copy it, then click on the
+> canvas in the Bonsai editor and paste. The nodes appear wired up and configured, ready to
+> run once you set the `PortName` to your own board.
+>
+> It is worth building each workflow by hand the first time — that is where the learning
+> happens — but pasting is a quick way to check your version against the finished one, or to
+> catch up if you fall behind.
+
 ![Measuring serial port communication latency](../images/closed-loop-latency-hobgoblin.svg)
 
 * Connect `GP22` on the Hobgoblin to `GP2` using a jumper wire.

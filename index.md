@@ -28,7 +28,9 @@ and shows how to drive real hardware from a Bonsai workflow using the
 1. Bring a laptop running Windows 10 or later.
 2. Install Bonsai by following the [Getting Started](worksheets/01-getting-started.md)
    worksheet — doing this in advance saves workshop time.
-3. If you have been sent a Hobgoblin board, bring it along with its USB cable.
+
+## During the session
+- You will be provided with a Hobgoblin board, read the [Hobgoblin](hobgoblin/index.md) instructions to flash the firmware and set the device up.
 
 ## Sections
 
