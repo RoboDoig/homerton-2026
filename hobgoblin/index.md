@@ -99,5 +99,18 @@ start:
 | Push button | `GP2` |
 | LED | `GP22` |
 
+## Sensors available on the course
+
+Sensors and actuators for the practical sessions come from the DFRobot
+[Gravity: 27 PCS Sensor Set](https://www.dfrobot.com/product-725.html) (SKU `KIT0011`),
+which will be available to borrow on the day. The
+[kit wiki](https://wiki.dfrobot.com/kit0011/) lists every module in it, along with a
+description and pinout for each.
+
+The modules are Gravity parts, so they plug directly into the labelled connectors on the
+Hobgoblin's expansion board. The worksheets only need the button and the LED, but the kit
+also holds light, sound, distance, gas and touch sensors — worth a look if you want to try
+your own variation on an exercise.
+
 You are now ready for the [worksheets](../worksheets/index.md), which introduce the device
 alongside the Bonsai operators that drive it.
