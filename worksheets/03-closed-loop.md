@@ -12,10 +12,6 @@ the experimental setup. The exercises below will show you how to use the online
 data processing capabilities of Bonsai to create and benchmark many different
 kinds of closed-loop systems.
 
-> [!NOTE]
-> Exercises 1 to 3 have been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercises 4 and 5 use the camera and the host only, so they need no changes.
-
 ## Measuring closed-loop latency
 
 One of the most important benchmarks to evaluate the performance of a closed-loop
@@ -34,6 +30,8 @@ system, also known as the round-trip time.
 
 Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.bonsai)
 
+![Measuring serial port communication latency](../images/closed-loop-latency-hobgoblin.svg)
+
 * Connect `GP22` on the Hobgoblin to `GP2` using a jumper wire.
 
 #### Setting up the device
@@ -45,7 +43,7 @@ Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.
 * Insert a `PublishSubject` after the `Device` and set its `Name` property to `Events`.
 
 > [!NOTE]
-> This three-node arrangement is the standard way to drive a Harp device. Anything
+> This three-node arrangement is a typical way to interface with a Harp device in Bonsai. Anything
 > multicast to `Commands` is sent to the board, and everything the board reports is
 > published on `Events`. Because the command subject feeds *into* the device, any
 > branch of the workflow can write to the hardware — which is what makes the loop
@@ -59,17 +57,16 @@ Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.
 * Insert an `Equal` transform and set its `Value` property to 1.
 
 > [!NOTE]
-> A Harp device reports the state of *all* its digital inputs in a single
+> Some Harp devices report the state of *all* digital inputs in a single
 > `DigitalInputState` message. `Parse` picks out those messages, `BitwiseAnd` masks
 > off everything except the `GP2` bit, and `Equal` turns the masked result into a
 > boolean that is `True` whenever `GP2` reads `HIGH`.
 
 #### Writing back the inverted state
 
-A Harp device does not have a single "digital output" register to write an inverted
+This particular Harp device does not have a single "digital output" register to write an inverted
 value into — outputs are raised and lowered through two separate registers,
-`DigitalOutputSet` and `DigitalOutputClear`. So in place of one `BitwiseNot`, we
-route the boolean down two branches and send a different message on each.
+`DigitalOutputSet` and `DigitalOutputClear`. We route the boolean down two branches and send a different message on each.
 
 * Insert a `Condition` operator and set its `Name` property to `OFF`. Double-click
   it and insert a `BitwiseNot` between `Source1` and `WorkflowOutput`, so the branch
@@ -106,22 +103,18 @@ allows.
 * **Question:** the interval is measured on the host, between outgoing commands. Which
   parts of that time are spent on the device, and which on the host?
 
-> [!NOTE]
-> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
-> with **File → Export Image** and save it as `images/closed-loop-latency-hobgoblin.svg`.
-> The old Arduino figure (`images/closed-loop-latency-arduino.svg`) is kept for
-> reference until the new one is in place.
-
 ### **Exercise 2:** Measuring video acquisition latency
 
 Completed workflow: [`03-closed-loop-02.bonsai`](../workflows/03-closed-loop-02.bonsai)
 
-This is the same digital feedback test as Exercise 1, but with the jumper wire
+![Measuring video acquisition latency](../images/closed-loop-latency-video-hobgoblin.svg)
+
+This is the same digital feedback test as Exercise 1, but with the jumper wire feedback source
 replaced by a camera: instead of feeding `GP22` straight back into `GP2`, we point a
 camera at an LED driven by `GP22` and detect the light in the video stream. The extra
 round-trip time we measure is therefore the cost of acquiring and processing a frame.
 
-* Connect a red LED to `GP22` on the Hobgoblin.
+* Connect an LED to `GP22` on the Hobgoblin.
 * Point the camera at the LED so that it is clearly visible in the image.
 
 #### Setting up the device
@@ -143,7 +136,7 @@ round-trip time we measure is therefore the cost of acquiring and processing a f
 * Insert a `MulticastSubject` after it and set its `Name` property to `Commands`.
 
 > [!NOTE]
-> With no input connected, `CreateMessage` acts as a source and emits a single message
+> With no input connected, `CreateMessage` emits a single message
 > when the workflow starts. This branch guarantees the LED begins in a known `LOW`
 > state, so the loop always starts from "dark" rather than from whatever the board was
 > left in.
@@ -187,8 +180,7 @@ round-trip time we measure is therefore the cost of acquiring and processing a f
 
 #### Writing back the inverted state
 
-As in Exercise 1, the inversion is done by routing the boolean down two branches
-rather than with a single `BitwiseNot`, because raising and lowering an output are
+As in Exercise 1, the inversion is done by routing the boolean down two branches, because raising and lowering an output are
 separate registers on a Harp device.
 
 * Insert a `Condition` operator after `DistinctUntilChanged` and set its `Name`
@@ -221,12 +213,6 @@ trip allows.
   camera? What does that tell you about the smallest latency a video-based closed
   loop can achieve?
 
-> [!NOTE]
-> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
-> with **File → Export Image** and save it as `images/closed-loop-latency-video-hobgoblin.svg`.
-> The old Arduino figure (`images/closed-loop-latency-video.svg`) is kept for
-> reference until the new one is in place.
-
 ## Closed-loop control
 
 ### **Exercise 3 (challenge):** Triggering a digital line based on region of interest activity
@@ -245,10 +231,7 @@ your hand through it — and turn off again when the region is clear.
 >
 > * Point the camera at the scene rather than at the LED, and use `Crop` to select the
 >   region you care about.
-> * `Sum (Dsp)` on a raw colour image is a blunt instrument. Experiment with
->   `Grayscale` and `Threshold (Vision)` before summing, so that the value you
->   threshold reflects how much of the region changed rather than its overall
->   brightness. On a single-channel image the sum is in the `Val0` field.
+> * Experiment with `Grayscale` and `Threshold (Vision)` before summing.
 > * Use the visualizers as you build: check what values come out of `Sum` with the
 >   region empty and with your hand in it, and pick the `GreaterThan` threshold from
 >   those two ranges.
@@ -362,7 +345,10 @@ position of the object. You can do this by using
 > [!NOTE]
 > Generally for image coordinates, (0,0) is at the top-left corner, and the centre
 > will be at coordinates (width/2, height/2) — usually (320,240) for images with
-> 640 x 480 resolution.
+> 640 x 480 resolution. You can inspect coordinates and pixel values in a 
+> Bonsai image visualizer by right-clicking on the visualizer while it's open.
+> Many other Bonsai visualizers provide additional information and control after right-clicking.
+> Try it also on a time series visualizer.
 
 * Insert an `Add` transform. This will add a fixed offset to the point. Configure
   the `Value` property with an offset that will place the object at the image
