@@ -13,8 +13,8 @@ data processing capabilities of Bonsai to create and benchmark many different
 kinds of closed-loop systems.
 
 > [!NOTE]
-> Exercise 1 has been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercises 2 to 6 still use an Arduino and are being rewritten.
+> Exercises 1 and 2 have been converted to the [Hobgoblin](../hobgoblin/index.md).
+> Exercises 3 to 6 still use an Arduino and are being rewritten.
 
 ## Measuring closed-loop latency
 
@@ -114,9 +114,42 @@ allows.
 
 ### **Exercise 2:** Measuring video acquisition latency
 
-![Video Closed-Loop Latency](../images/closed-loop-latency-video.svg)
+Completed workflow: [`03-closed-loop-02.bonsai`](../workflows/03-closed-loop-02.bonsai)
 
-* Connect a red LED to Arduino digital pin 13.
+This is the same digital feedback test as Exercise 1, but with the jumper wire
+replaced by a camera: instead of feeding `GP22` straight back into `GP2`, we point a
+camera at an LED driven by `GP22` and detect the light in the video stream. The extra
+round-trip time we measure is therefore the cost of acquiring and processing a frame.
+
+* Connect a red LED to `GP22` on the Hobgoblin.
+* Point the camera at the LED so that it is clearly visible in the image.
+
+#### Setting up the device
+
+* Reproduce the `Commands` / `Device` / `Events` scaffold from Exercise 1: a
+  `BehaviorSubject` named `Commands` with `TypeArguments` set to `HarpMessage`, a
+  `Device` source (from `Harp.Hobgoblin`) with its `PortName` configured, and a
+  `PublishSubject` named `Events`.
+
+> [!NOTE]
+> This exercise never reads from `Events` — the input now arrives through the camera.
+> Keep the subject anyway: it is the standard device arrangement, and having the
+> board's messages published makes them available to any visualizer or logging branch
+> you add later.
+
+* In a new branch, insert a `CreateMessage` source. Set its `MessageType` property to
+  `Write`, its `Payload` to `CreateDigitalOutputClearPayload`, and the payload's
+  `DigitalOutputClear` property to `GP22`.
+* Insert a `MulticastSubject` after it and set its `Name` property to `Commands`.
+
+> [!NOTE]
+> With no input connected, `CreateMessage` acts as a source and emits a single message
+> when the workflow starts. This branch guarantees the LED begins in a known `LOW`
+> state, so the loop always starts from "dark" rather than from whatever the board was
+> left in.
+
+#### Detecting the LED in the video
+
 * Insert a `CameraCapture` source.
 * Insert a `Crop` transform.
 * Run the workflow and set the `RegionOfInterest` property to a small area around the LED.
@@ -137,25 +170,62 @@ allows.
 > using an LED with a colour other than red, select the output field accordingly.
 
 * Insert a `GreaterThan` transform.
-* Insert a `BitwiseNot` transform.
-* Insert a `DigitalOutput` sink and configure its `Pin` property to pin 13.
 * Run the workflow and use the visualizer of the `Sum` operator to choose an
-  appropriate threshold for `GreaterThan`. When connected to pin 13, the LED
-  should flash a couple of times when the Arduino is first connected.
+  appropriate threshold for the `Value` property of `GreaterThan`. The output should
+  be `True` only while the LED is lit — check this by toggling the LED by hand, or by
+  temporarily connecting the boolean straight through to the output branch below.
 * Insert a [`DistinctUntilChanged`](https://bonsai-rx.org/docs/operators/distinctuntilchanged)
-  operator after the `BitwiseNot` transform.
+  operator after the `GreaterThan` transform.
 
 > [!NOTE]
 > The `DistinctUntilChanged` operator filters consecutive duplicate items from an
-> observable sequence. In this case, we want to change the value of the LED only
-> when the threshold output changes from `LOW` to `HIGH`, or vice-versa. This lets
-> us correctly measure the latency between detecting a change in the input and
-> measuring the response to that change.
+> observable sequence. The camera delivers a frame every few milliseconds, so without
+> this operator we would send a command to the board on *every* frame and end up
+> measuring the frame interval rather than the closed-loop latency. With it, a command
+> is only sent when the detected state actually changes from `LOW` to `HIGH`, or
+> vice-versa.
 
-* Insert the `TimeInterval` operator and select `Output` > `Interval` > `TotalMilliseconds`.
+#### Writing back the inverted state
+
+As in Exercise 1, the inversion is done by routing the boolean down two branches
+rather than with a single `BitwiseNot`, because raising and lowering an output are
+separate registers on a Harp device.
+
+* Insert a `Condition` operator after `DistinctUntilChanged` and set its `Name`
+  property to `OFF`. Double-click it and insert a `BitwiseNot` between `Source1` and
+  `WorkflowOutput`, so the branch only passes events where the LED was *not* detected.
+* After the `OFF` condition, insert a `CreateMessage` operator. Set its `MessageType`
+  property to `Write`, its `Payload` to `CreateDigitalOutputSetPayload`, and the
+  payload's `DigitalOutputSet` property to `GP22`.
+* In a new branch from `DistinctUntilChanged`, insert a second `Condition` and set its
+  `Name` property to `ON`. Leave its contents as the default pass-through, so the
+  branch only passes events where the LED *was* detected.
+* After the `ON` condition, insert another `CreateMessage`. Set its `MessageType`
+  property to `Write`, its `Payload` to `CreateDigitalOutputClearPayload`, and the
+  payload's `DigitalOutputClear` property to `GP22`.
+* Join both branches with a `Merge` combinator.
+* Insert a `MulticastSubject` and set its `Name` property to `Commands`.
+
+The loop is now closed through the camera: a dark region of interest lights the LED, a
+bright one extinguishes it, and the board flickers at whatever rate the video round
+trip allows.
+
+#### Measuring the interval
+
+* Insert a `TimeInterval` operator after the `MulticastSubject`.
+* Right-click on the `TimeInterval` operator and select `Output` > `Interval` > `TotalMilliseconds`.
 * Run the workflow and measure the round-trip time between LED triggers.
-* **Question:** given these measurements, what would you estimate is the **input**
-  latency for video acquisition?
+* **Question:** given these measurements, and the serial round trip you measured in
+  Exercise 1, what would you estimate is the **input** latency for video acquisition?
+* **Question:** how does the measured interval compare to the frame interval of your
+  camera? What does that tell you about the smallest latency a video-based closed
+  loop can achieve?
+
+> [!NOTE]
+> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
+> with **File → Export Image** and save it as `images/closed-loop-latency-video-hobgoblin.svg`.
+> The old Arduino figure (`images/closed-loop-latency-video.svg`) is kept for
+> reference while the remaining exercises are converted.
 
 ## Closed-loop control
 

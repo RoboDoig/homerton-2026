@@ -13,3 +13,4 @@ download and open it.
 | File | Worksheet |
 | --- | --- |
 | `03-closed-loop-01.bonsai` | [Closed-Loop Systems](../worksheets/03-closed-loop.md), Exercise 1 |
+| `03-closed-loop-02.bonsai` | [Closed-Loop Systems](../worksheets/03-closed-loop.md), Exercise 2 |
