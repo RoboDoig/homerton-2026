@@ -14,3 +14,4 @@ download and open it.
 | --- | --- |
 | `03-closed-loop-01.bonsai` | [Closed-Loop Systems](../worksheets/03-closed-loop.md), Exercise 1 |
 | `03-closed-loop-02.bonsai` | [Closed-Loop Systems](../worksheets/03-closed-loop.md), Exercise 2 |
+| `04-synching-02.bonsai` | [Data Synchronization](../worksheets/04-synching.md), Exercise 2 |

@@ -10,6 +10,11 @@ analysis. The exercises below will walk you through some common synchronization
 problems encountered in systems neuroscience experiments, and how to handle them
 using Bonsai.
 
+> [!NOTE]
+> Exercise 2 has been converted to the [Hobgoblin](../hobgoblin/index.md).
+> Exercises 3 to 6 still use the Arduino `AnalogInput` source and its wiring, and are
+> being rewritten.
+
 ### **Exercise 1:** Synchronizing video from two webcams
 
 ![Synching Video](../images/synching-webcam.svg)
@@ -46,34 +51,72 @@ the ITI state for the next trial.
 
 ### **Exercise 2:** Generating a fixed-interval stimulus
 
-In this first exercise, you will assemble the basic hardware and software
-components required to implement the reaction time task. The wiring diagram below
-illustrates the hardware assembly. You can wire the LED into any digital input pin,
-but make sure to note the pin number for the steps below. Note that in the wiring
-diagram we are using the standard cable to connect the LED to an analog port, while
-also connecting the digital line of the LED to a digital output with a jumper wire.
+Completed workflow: [`04-synching-02.bonsai`](../workflows/04-synching-02.bonsai)
 
-![Reaction Time Circuit](../images/reaction-time-circuit.png)
+In this first exercise, you will assemble the basic hardware and software
+components required to implement the reaction time task.
+
+#### Wiring
+
+| Component | Pin | Used from |
+| --- | --- | --- |
+| LED (stimulus) | `GP22` | Exercise 2 |
+| Push button (response) | `GP2` | Exercise 3 |
+
+Wire both now, so you do not have to take the board apart between exercises.
+
+> [!NOTE]
+> Unlike the Arduino version of this task, there is no need to duplicate the LED wire
+> into an analog input to record the stimulus. The Hobgoblin timestamps every message
+> it exchanges with the host, so the commands that drive `GP22` and the events reported
+> by `GP2` already arrive with device time attached — which is the whole point of the
+> exercises that follow.
+
+#### Setting up the device
 
 We will start by using a fixed-interval blinking LED as our stimulus.
 
-![Create Arduino](../images/create-arduino.svg)
+* Reproduce the `Commands` / `Device` / `Events` scaffold from
+  [Exercise 1 of the closed-loop worksheet](03-closed-loop.md#exercise-1-measuring-serial-port-communication-latency):
+  a `BehaviorSubject` named `Commands` with `TypeArguments` set to `HarpMessage`, a
+  `Device` source (from `Harp.Hobgoblin`) with its `PortName` configured, and a
+  `PublishSubject` named `Events`.
 
-* To configure the Arduino analog sampling rate, insert a `CreateArduino` source.
-* Configure the `PortName` to the Arduino port where the microcontroller is connected.
-* Configure the `SamplingInterval` property to 10 ms.
-
-![Reaction Time Stimulus](../images/reaction-time-stimulus.svg)
+#### Generating the stimulus
 
 * Insert a `Timer` source and set its `DueTime` property to 1 second.
-* Insert a `Boolean` source and set its `Value` property to `True`.
-* Insert a `DigitalOutput` sink and set its `Pin` property to the Arduino pin where
-  the LED is connected.
-* Configure the `PortName` to the Arduino port where the microcontroller is connected.
+* Insert a `CreateMessage` operator after the `Timer`. Set its `MessageType` property
+  to `Write`, its `Payload` to `CreateDigitalOutputSetPayload`, and the payload's
+  `DigitalOutputSet` property to `GP22`.
+* Insert a `MulticastSubject` and set its `Name` property to `Commands`.
+
+> [!NOTE]
+> With an input connected, `CreateMessage` turns every event it receives into a Harp
+> message — here, one "raise `GP22`" command per timer tick. Multicasting that message
+> to `Commands` sends it to the board, which is how a Harp device replaces the Arduino
+> `DigitalOutput` sink.
+
 * Insert a `Delay` operator and set its `DueTime` property to 200 milliseconds.
-* Insert a `Boolean` source and set its `Value` property to `False`.
-* Insert a `DigitalOutput` sink configured to the same `Pin` and `PortName`.
+* Insert a second `CreateMessage` operator. Set its `MessageType` property to `Write`,
+  its `Payload` to `CreateDigitalOutputClearPayload`, and the payload's
+  `DigitalOutputClear` property to `GP22`.
+* Insert another `MulticastSubject` and set its `Name` property to `Commands`.
 * Insert a `Repeat` operator.
+* Run the workflow and verify that the LED blinks for 200 ms once every second.
+
+> [!NOTE]
+> The whole stimulus is a single chain: the `Timer` waits out the inter-trial interval,
+> the first pair of nodes turns the LED on, the `Delay` holds it on for 200 ms, the
+> second pair turns it off, and `Repeat` starts the sequence again. Nothing here reads from
+> `Events` yet — the stimulus is open-loop, and the next exercises add the recording
+> and the response.
+
+> [!NOTE]
+> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
+> with **File → Export Image** and save it as `images/reaction-time-stimulus-hobgoblin.svg`.
+> The old Arduino figures (`images/create-arduino.svg`,
+> `images/reaction-time-stimulus.svg` and `images/reaction-time-circuit.png`) are kept
+> for reference until the remaining exercises are converted.
 
 ### **Exercise 3:** Measuring reaction time
 
