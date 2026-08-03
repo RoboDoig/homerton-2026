@@ -19,7 +19,7 @@ and shows how to drive real hardware from a Bonsai workflow using the
 | 09:20 | Introduction to Bonsai and Harp | [Slides](slides/index.md) |
 | 10:00 | Bonsai workshop | [Worksheets](worksheets/index.md) |
 | 10:30 | Break | |
-| 11:00 | Bonsai project best practices | [Slides](slides/index.md) |
+| 11:00 | Bonsai project best practices | |
 | 11:30 | Bonsai workshop | [Worksheets](worksheets/index.md) |
 | 13:00 | Wrap-up and questions | |
 
