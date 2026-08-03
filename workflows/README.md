@@ -17,3 +17,4 @@ download and open it.
 | `04-synching-02.bonsai` | [Data Synchronization](../worksheets/04-synching.md), Exercise 2 |
 | `04-synching-03.bonsai` | [Data Synchronization](../worksheets/04-synching.md), Exercise 3 |
 | `04-synching-04.bonsai` | [Data Synchronization](../worksheets/04-synching.md), Exercise 4 |
+| `04-synching-05.bonsai` | [Data Synchronization](../worksheets/04-synching.md), Exercise 5 |

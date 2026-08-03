@@ -11,9 +11,8 @@ problems encountered in systems neuroscience experiments, and how to handle them
 using Bonsai.
 
 > [!NOTE]
-> Exercises 2 to 4 have been converted to the [Hobgoblin](../hobgoblin/index.md).
-> Exercise 5 still uses the Arduino `AnalogInput` source and its wiring, and is being
-> rewritten.
+> Exercises 2 to 5 use the [Hobgoblin](../hobgoblin/index.md). Exercise 1 needs only two
+> webcams.
 
 ### **Exercise 1:** Synchronizing video from two webcams
 
@@ -250,26 +249,72 @@ as it is — only the stimulus changes.
 
 ### **Exercise 5:** Recording response-triggered videos
 
-![Triggered Video Outer](../images/triggered-video-outer.svg)
+Completed workflow: [`04-synching-05.bonsai`](../workflows/04-synching-05.bonsai)
 
-* Starting from the previous workflow, insert a `CameraCapture` source and position the
-  camera so that you can see both the LED and the computer keyboard.
-* Insert a `VideoWriter` sink and configure the `FileName` with a path ending in `.avi`.
-* Insert another `AnalogInput` source with the
-  `Pin` property set to the button press pin number.
-* Insert a `GreaterThan` operator.
-* Insert a `DistinctUntilChanged` operator.
-* Insert a `Condition` operator.
-* In a new branch coming off the `VideoWriter`, insert a `Delay` operator.
-* Set the `DueTime` property of the `Delay` operator to 1 second.
-* Insert a `WindowTrigger` operator, and set its `Count` property to 100.
-* Insert a `SelectMany` operator and inside the nested node create the below workflow:
+Recording video continuously for a whole session produces enormous files, most of them
+showing nothing of interest. Instead we will record a short clip around each response,
+including the moment *before* the button was pressed.
 
-![Triggered Video Inner](../images/triggered-video-inner.svg)
+Continue from your Exercise 4 workflow, leaving the stimulus and measurement branches
+alone.
 
-* Run the workflow and record a few videos triggered on the button press.
-* Inspect the videos frame by frame and check whether the response LED comes ON at
-  exactly the same frame number across different trials.
+#### Buffering the video
+
+* Insert a `CameraCapture` source and position the camera so that you can see both the
+  LED and the button.
+* Insert a `Delay` operator after it and set its `DueTime` property to 1 second.
+
+> [!NOTE]
+> This `Delay` is the trick that makes pre-trigger recording possible. Frames reach the
+> rest of the workflow a second later than they were acquired, so when a press arrives
+> the frames from the second *before* it have not been passed on yet and can still be
+> included in the clip.
+
+#### Detecting the response
+
+* In a new branch, insert a `SubscribeSubject` named `Events`, a `Parse` transform set
+  to `TimestampedDigitalInputState`, and a `Condition` named `ButtonPress` containing a
+  `MemberSelector` set to `Value` followed by an `Equal` transform set to `GP2` — the
+  same detection you built in Exercise 3.
+
+> [!TIP]
+> This is now the second copy of that branch in the workflow. If you would rather not
+> repeat it, publish the presses once with a `PublishSubject` named `ButtonPress` and
+> subscribe to it in both places.
+
+#### Cutting and writing the clips
+
+* Insert a `WindowTrigger` operator, with the delayed frames as `Source1` and the button
+  presses as `Source2`, and set its `Count` property to 100.
+
+> [!NOTE]
+> `WindowTrigger` slices a sequence into windows: each event on `Source2` opens a new
+> window, which then collects the next `Count` items from `Source1`. At 30 frames per
+> second, 100 frames is a clip of a little over three seconds — the first second of
+> which precedes the press, thanks to the `Delay`.
+
+* Insert a `SelectMany` operator and set its `Name` property to `LogVideo`.
+* Double-click it and insert a `VideoWriter` sink between `Source1` and
+  `WorkflowOutput`. Configure the `FileName` with a path ending in `.avi`, e.g.
+  `press.avi`, and set the `Suffix` property to `Timestamp`.
+
+> [!NOTE]
+> Each window arriving at `SelectMany` is itself a sequence of frames, so the nested
+> workflow runs once per press with its own `VideoWriter` — one file per trial. The
+> `Timestamp` suffix is what keeps those files from overwriting each other: each clip is
+> named after the time it was recorded.
+
+* Run the workflow and record a few clips triggered on the button press.
+* Inspect the clips frame by frame and check whether the LED comes on at exactly the
+  same frame number across different trials.
 * **Question:** if it does not, why would this happen? And how would you fix it?
+
+> [!NOTE]
+> **TODO:** this exercise needs workflow figures. Export the outer workflow and the
+> contents of the `LogVideo` node from the Bonsai editor with **File → Export Image**,
+> saving them as `images/triggered-video-outer-hobgoblin.svg` and
+> `images/triggered-video-inner-hobgoblin.svg`. The old Arduino figures
+> (`images/triggered-video-outer.svg`, `images/triggered-video-inner.svg`) are kept for
+> reference until the new ones are in place.
 
 Next: [State Machines](05-state-machines.md).
