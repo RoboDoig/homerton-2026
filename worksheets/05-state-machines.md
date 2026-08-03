@@ -28,28 +28,11 @@ The exercises below will show you how to translate the above diagram of states a
 events into an equivalent Bonsai workflow, which can be easily adapted and modified
 to describe many different operant behaviour tasks.
 
-> [!NOTE]
-> **TODO:** every workflow figure in exercises 1 to 5 still shows the Arduino version of
-> the task and has been removed from the text. Export replacements from the Bonsai editor
-> with **File → Export Image** and reference them again:
->
-> | Needed figure | Shows |
-> | --- | --- |
-> | `statemachine-logging-hobgoblin.svg` | the hardware layer, Exercise 1 |
-> | `statemachine-stimulus-hobgoblin.svg` | the top-level trial, Exercise 2 |
-> | `statemachine-stimulus-led-hobgoblin.svg` | inside `StimOn`, Exercise 2 |
-> | `statemachine-stimulus-response-hobgoblin.svg` | inside `Response`, Exercises 3 and 4 |
-> | `statemachine-stimulus-response-outcomes-hobgoblin.svg` | the outcome branches, Exercise 5 |
-> | `statemachine-stimulus-response-outcomes-reward-hobgoblin.svg` | inside `Reward`, Exercise 5 |
->
-> The old Arduino figures (`images/statemachine-*.svg`) are kept in the repository for
-> reference until the new ones are in place. The task diagrams themselves
-> (`reactiontime-task.svg`, `go-nogo-task.svg`, `placepreference.svg`) describe states
-> rather than workflows and are still accurate.
-
 ### **Exercise 1:** Declaring and logging external hardware events
 
 Completed workflow: [`05-state-machines-01.bonsai`](../workflows/05-state-machines-01.bonsai)
+
+![Declaring and logging hardware events](../images/statemachine-logging-hobgoblin.svg)
 
 In this worksheet we will use the [Hobgoblin](../hobgoblin/index.md) as our interface to
 the outside world, with the same wiring as the synchronization worksheet: a push button
@@ -117,6 +100,8 @@ behind a single boolean variable.
 
 Completed workflow: [`05-state-machines-02.bonsai`](../workflows/05-state-machines-02.bonsai)
 
+![Inter-trial interval and stimulus presentation](../images/statemachine-stimulus-hobgoblin.svg)
+
 Translating a state machine diagram into a Bonsai workflow begins by identifying the
 initial state of the task (i.e. the beginning of each trial). It is often convenient
 to consider the inter-trial interval period as the initial state, followed by
@@ -137,6 +122,8 @@ branch, and talks to the board only through the `Led` and `Response` subjects.
 > specific case of `Sink` operators, the `WorkflowOutput` node can be safely ignored.
 
 **Inside `StimOn`:**
+
+![Inside the StimOn node](../images/statemachine-stimulus-led-hobgoblin.svg)
 
 * Insert a `Boolean` operator following `Source1` and set its `Value` property to `True`.
 * Find and right-click the `Led` subject in the toolbox and select the option `Multicast`.
@@ -177,6 +164,8 @@ Completed workflow: [`05-state-machines-03.bonsai`](../workflows/05-state-machin
 
 **Inside `Response`:**
 
+![Inside the Response node](../images/statemachine-stimulus-response-hobgoblin.svg)
+
 * Subscribe to the `Response` subject in the toolbox.
 * Insert a `Boolean` operator and set its `Value` property to `True`.
 * Insert a `Take` operator and set its `Count` property to 1.
@@ -204,6 +193,8 @@ Completed workflow: [`05-state-machines-04.bonsai`](../workflows/05-state-machin
 
 **Inside `Response`:**
 
+![Inside the Response node, with the timeout branch added](../images/statemachine-stimulus-response-hobgoblin-4.svg)
+
 * Inside the `Response` node, insert a `Timer` source and set its `DueTime` property
   to be about 1 second.
 * Insert a `Boolean` operator after the `Timer` and set its `Value` property to `False`.
@@ -223,6 +214,8 @@ Completed workflow: [`05-state-machines-04.bonsai`](../workflows/05-state-machin
 ### **Exercise 5:** Specifying conditional task outcomes
 
 Completed workflow: [`05-state-machines-05.bonsai`](../workflows/05-state-machines-05.bonsai)
+
+![Specifying conditional task outcomes](../images/statemachine-stimulus-response-outcomes-hobgoblin.svg)
 
 * Insert a `Condition` operator after the `StimOff` node, and set its `Name` property
   to `Success`.
@@ -249,6 +242,8 @@ Completed workflow: [`05-state-machines-05.bonsai`](../workflows/05-state-machin
   successful. For example, you can make the LED blink three times in rapid succession:
 
 **Inside `Reward`:**
+
+![Inside the Reward node](../images/statemachine-stimulus-response-outcomes-reward-hobgoblin.svg)
 
   * Insert a `Timer` node and set both the `DueTime` and the `Period` properties to 100ms.
   * Insert a `Mod` operator and set the `Value` property to 2.
