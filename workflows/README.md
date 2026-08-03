@@ -6,6 +6,10 @@ download and open it.
 
 - Keep the companion `.bonsai.layout` file next to each workflow.
 - Name files after the worksheet and exercise they belong to, e.g.
-  `02-acquisition-tracking.bonsai`.
+  `03-closed-loop-01.bonsai`.
 - `example.bonsai` is an empty placeholder referenced by the worksheet template.
   Delete it once real workflows are in place.
+
+| File | Worksheet |
+| --- | --- |
+| `03-closed-loop-01.bonsai` | [Closed-Loop Systems](../worksheets/03-closed-loop.md), Exercise 1 |

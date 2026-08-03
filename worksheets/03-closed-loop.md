@@ -12,6 +12,10 @@ the experimental setup. The exercises below will show you how to use the online
 data processing capabilities of Bonsai to create and benchmark many different
 kinds of closed-loop systems.
 
+> [!NOTE]
+> Exercise 1 has been converted to the [Hobgoblin](../hobgoblin/index.md).
+> Exercises 2 to 6 still use an Arduino and are being rewritten.
+
 ## Measuring closed-loop latency
 
 One of the most important benchmarks to evaluate the performance of a closed-loop
@@ -28,13 +32,67 @@ system, also known as the round-trip time.
 
 ### **Exercise 1:** Measuring serial port communication latency
 
-![Arduino Closed-Loop Latency](../images/closed-loop-latency-arduino.svg)
+Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.bonsai)
 
-* Connect the digital pin 8 on the Arduino to digital pin 13 using a jumper wire.
-* Insert a `DigitalInput` source and set its `Pin` property to 8.
-* Insert a `BitwiseNot` transform.
-* Insert a `DigitalOutput` sink and configure its `Pin` property to pin 13.
-* Insert a `TimeInterval` operator.
+* Connect `GP22` on the Hobgoblin to `GP2` using a jumper wire.
+
+#### Setting up the device
+
+* Insert a `BehaviorSubject` source, set its `TypeArguments` to `HarpMessage`, and
+  set its `Name` property to `Commands`.
+* Insert a `Device` source (from `Harp.Hobgoblin`) after it, and configure the
+  `PortName` property with the COM port your board is connected to.
+* Insert a `PublishSubject` after the `Device` and set its `Name` property to `Events`.
+
+> [!NOTE]
+> This three-node arrangement is the standard way to drive a Harp device. Anything
+> multicast to `Commands` is sent to the board, and everything the board reports is
+> published on `Events`. Because the command subject feeds *into* the device, any
+> branch of the workflow can write to the hardware — which is what makes the loop
+> below possible.
+
+#### Reading the digital input
+
+* Insert a `SubscribeSubject` and set its `Name` property to `Events`.
+* Insert a `Parse` transform and set its `Register` property to `DigitalInputState`.
+* Insert a `BitwiseAnd` transform and set its `Value` property to `GP2`.
+* Insert an `Equal` transform and set its `Value` property to 1.
+
+> [!NOTE]
+> A Harp device reports the state of *all* its digital inputs in a single
+> `DigitalInputState` message. `Parse` picks out those messages, `BitwiseAnd` masks
+> off everything except the `GP2` bit, and `Equal` turns the masked result into a
+> boolean that is `True` whenever `GP2` reads `HIGH`.
+
+#### Writing back the inverted state
+
+A Harp device does not have a single "digital output" register to write an inverted
+value into — outputs are raised and lowered through two separate registers,
+`DigitalOutputSet` and `DigitalOutputClear`. So in place of one `BitwiseNot`, we
+route the boolean down two branches and send a different message on each.
+
+* Insert a `Condition` operator and set its `Name` property to `OFF`. Double-click
+  it and insert a `BitwiseNot` between `Source1` and `WorkflowOutput`, so the branch
+  only passes events where `GP2` is `LOW`.
+* After the `OFF` condition, insert a `CreateMessage` operator. Set its
+  `MessageType` property to `Write`, its `Payload` to `CreateDigitalOutputSetPayload`,
+  and the payload's `DigitalOutputSet` property to `GP22`.
+* In a new branch from the `Equal` transform, insert a second `Condition` and set its
+  `Name` property to `ON`. Leave its contents as the default pass-through, so the
+  branch only passes events where `GP2` is `HIGH`.
+* After the `ON` condition, insert another `CreateMessage`. Set its `MessageType`
+  property to `Write`, its `Payload` to `CreateDigitalOutputClearPayload`, and the
+  payload's `DigitalOutputClear` property to `GP22`.
+* Join both branches with a `Merge` combinator.
+* Insert a `MulticastSubject` and set its `Name` property to `Commands`.
+
+The loop is now closed: reading `LOW` raises `GP22`, reading `HIGH` lowers it, and
+because `GP22` is wired back to `GP2` the board oscillates as fast as the round trip
+allows.
+
+#### Measuring the interval
+
+* Insert a `TimeInterval` operator after the `MulticastSubject`.
 * Right-click on the `TimeInterval` operator and select `Output` > `Interval` > `TotalMilliseconds`.
 
 > [!NOTE]
@@ -45,6 +103,14 @@ system, also known as the round-trip time.
 > accurately time intervals with sub-microsecond precision.
 
 * Run the workflow and measure the round-trip time between digital input messages.
+* **Question:** the interval is measured on the host, between outgoing commands. Which
+  parts of that time are spent on the device, and which on the host?
+
+> [!NOTE]
+> **TODO:** this exercise needs a workflow figure. Export one from the Bonsai editor
+> with **File → Export Image** and save it as `images/closed-loop-latency-hobgoblin.svg`.
+> The old Arduino figure (`images/closed-loop-latency-arduino.svg`) is kept for
+> reference while the remaining exercises are converted.
 
 ### **Exercise 2:** Measuring video acquisition latency
 
