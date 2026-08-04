@@ -19,9 +19,6 @@ Worksheets 3 to 5 use the Harp Hobgoblin. Set the board up first, following the
 [Hobgoblin](../hobgoblin/index.md) section — it also explains what Harp registers are, and
 which pins the exercises expect.
 
-> [!NOTE]
-> Use [Worksheet template](template.md) as the starting point for new material.
-
 Worksheets 2 to 5 and their figures are adapted from the
 [St Andrews 2024 Bonsai course](https://github.com/neurogears/st-andrews-2024)
 by NeuroGEARS Ltd., licensed
