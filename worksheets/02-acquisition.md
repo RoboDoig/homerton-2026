@@ -9,9 +9,6 @@ introduce the most common Bonsai data types, starting with images.
 
 ## Video acquisition
 
-An image is a 2D matrix of pixels. Each pixel is either a brightness value in a
-grayscale image, or a BGR colour value in a colour image.
-
 ### **Exercise 1:** Saving a video
 
 ![Saving a video](../images/acquisition-video.svg)
