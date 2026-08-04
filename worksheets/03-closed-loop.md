@@ -148,7 +148,7 @@ round-trip time we measure is therefore the cost of acquiring and processing a f
 > [!NOTE]
 > With no input connected, `CreateMessage` emits a single message
 > when the workflow starts. This branch guarantees the LED begins in a known `LOW`
-> state, so the loop always starts from "dark" rather than from whatever the board was
+> state, so the loop always starts from "dark" rather than from whatever state the board was
 > left in.
 
 #### Detecting the LED in the video
