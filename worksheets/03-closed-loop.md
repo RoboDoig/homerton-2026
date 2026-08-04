@@ -46,10 +46,10 @@ Completed workflow: [`03-closed-loop-01.bonsai`](../workflows/03-closed-loop-01.
 
 #### Setting up the device
 
-* Insert a `BehaviorSubject` source, set its `TypeArguments` to `HarpMessage`, and
-  set its `Name` property to `Commands`.
-* Insert a `Device` source (from `Harp.Hobgoblin`) after it, and configure the
+* Insert a `Device` source (from `Harp.Hobgoblin`), and configure the
   `PortName` property with the COM port your board is connected to.
+* Insert a `BehaviorSubject` source (right-click the `Device` >> `CreateSource` >> `BehaviorSubject`), and
+  set its `Name` property to `Commands`. Connect its output to the `Device`.
 * Insert a `PublishSubject` after the `Device` and set its `Name` property to `Events`.
 
 > [!NOTE]
